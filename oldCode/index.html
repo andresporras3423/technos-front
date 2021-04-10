@@ -1,0 +1,297 @@
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <TITLE>programming commands</TITLE>
+            <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+            <link rel="stylesheet" href="index.css">
+            <!-- jQuery library -->
+           <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+            <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+            <script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js"></script>
+            
+    </head>
+    <body>
+        <div id="app" class="col-md-12">
+            <div v-if="!showLogin" >
+                <navbar-component inline-template>
+                    <div>
+                        <div class="col-md-12" id="barNav">
+                <nav class="navbar navbar-blue">
+              <ul class="nav navbar-nav">
+                <li class="active menuDesktop" @click="newTab(0)"><a href="#" v-bind:class="currentTab==0 ? linkBackColor: ''">Words</a></li>
+                <li class="menuDesktop"><a href="#" @click="newTab(1)" v-bind:class="currentTab==1 ? linkBackColor: ''">Technologies</a></li>
+                <li class="menuDesktop"><a href="#" @click="newTab(2)" v-bind:class="currentTab==2 ? linkBackColor: ''">Tests</a></li>
+                <li class="menuDesktop"><a href="#" @click="exit()">Exit</a></li>
+                <li class="menuSmarthPhone" >
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="font-size: x-large;">menu
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink"  style="background-color: rgb(46, 109, 164);">
+          <ul style="font-size: x-large;">
+              <li @click="newTab(0)"><a href="#" v-bind:class="currentTab==0 ? linkBackColor: ''">Words</a></li>
+                <li><a href="#" @click="newTab(1)" v-bind:class="currentTab==1 ? linkBackColor: ''">Technologies</a></li>
+                <li><a href="#" @click="exit()">Exit</a></li>
+          </ul>
+        </div>
+                </li>
+              </ul>
+          </nav>
+            </div>         
+            <div v-if="currentTab==0">
+              <dictionary-component inline-template>
+              <div class="col-md-12">
+              <div>
+              <div class="col-md-6">
+                <div class="form-group"> <!-- Full Name -->
+                  <label for="technology" class="control-label">technology</label>
+                  <select class="form-control" id="technology" v-model="techno_id" :disabled="disabled" name="technology">
+                    <option v-for="(t, index) in listTechnos" :value="t.techno_id">{{t.technology}}</option>
+                  </select>
+              </div>
+                      <div class="form-group"> <!-- Full Name -->
+                          <label for="word" class="control-label">word</label>
+                          <input type="text"  ref="word" class="form-control" id="word" :disabled="disabled" v-model="word" name="word" placeholder="console.log()">
+                      </div>  
+                      
+                      <div class="form-group"> <!-- Full Name -->
+                          <label for="translation" class="control-label">meaning</label>
+                          <textarea rows="5" cols="65" id="translation" v-model="translation" :disabled="disabled" name="translation" placeholder="print content">
+
+                            </textarea>
+                            <!-- <input type="text" class="form-control" id="translation" v-model="translation" :disabled="disabled" name="translation" placeholder="print content"> -->
+                          
+                      </div> 
+                  
+                           
+                      
+                      <div class="form-group"> <!-- Submit Button -->
+                          <table class="col-md-12">
+                              <tr class="spaceBetweenTr">
+                                  <td>
+                                      <button  type="submit" @click="createWord()" class="btn btn-primary">save</button>
+                                  </td>
+                                  <td>
+                                      <div class="col-md-12">
+                                          <div class="col-md-6 radioButtonFixed"><input name="changeSort" value="saved" type="radio" @click="changeSort(0)" :checked="checked==0">Saved order</div>
+                                          <div class="col-md-6 radioButtonFixed"><input name="changeSort" value="alpha" type="radio" @click="changeSort(1)" :checked="checked==1">Alphabetical order</div>
+                                      </div>
+                                  </td>
+                              </tr>
+                              <tr class="spaceBetweenTr">
+                                  <td>
+                                      <button  type="submit" @click="clearData()" class="btn btn-primary">clear</button>
+                                  </td>
+                              </tr>
+                              <tr class="spaceBetweenTr">
+                                  <td>
+                                      <button type="submit" @click="searchWords()" class="btn btn-primary">search</button>
+                                      <select class="" id="nQuestions" v-model="tSearch">
+                                  <option value="0" selected>contains</option>
+                                  <option value="1">begins</option> 
+                                  <option value="2">ends</option>
+                                  <option value="3">exact</option> 
+                               </select>
+                                  </td>
+                              </tr>
+                          </table>
+                          <div class="col-md-12"  v-bind:class="[colorClass[colorOpt]]">{{messageData}}</div>
+                          
+                      </div>     
+                      
+                  </div>
+              <div class="datagrid col-md-6 horizontalScroll">
+                  <table class="col-md-12">
+                      <thead>
+                          <tr>
+                            <th>Technology</th><th>Word</th><th>watch</th><th>edit</th><th>delete</th>
+                          </tr>
+                      </thead>
+                      <tbody v-for="(p, index) in listWords[currentItem]">
+                          <tr>
+                              <td>{{p.technology}}</td>
+                              <td>{{p.word}}</td>
+                              <td><button type="submit" class="btn btn-primary" @click="readWord(index)"><span class="glyphicon glyphicon-search"></span></button></td>
+                              <td><button type="submit" class="btn btn-primary" @click="updateWord(index)"><span class="glyphicon glyphicon-pencil"></span></button></td>
+                              <td><button type="submit" class="btn btn-primary" @click="deleteWord(index)"><span class="glyphicon glyphicon-remove"></span></button></td>
+                          </tr>
+                      </tbody>
+                      
+                      </table>
+                      <div class="col-md-12" style="padding: 0px;">
+                          <button class="col-md-2 btn btn-primary" @click="goFirst()"><span class="glyphicon glyphicon-backward"></span></button>
+                          <button class="col-md-2 btn btn-primary" @click="goBack()"><span class="glyphicon glyphicon-triangle-left"></span></button>
+                          <label class="col-md-4" style="text-align: center; padding: 0px;">
+                              <div class="col-md-12">{{currentItem+1}}/{{completeList.length}}</div>
+                              <div class="col-md-12">{{size}} words</div>
+                              </label>
+                          <button class="col-md-2 btn btn-primary" @click="goNext()"><span class="glyphicon glyphicon-triangle-right"></span></button>
+                          <button class="col-md-2 btn btn-primary" @click="goLast()"><span class="glyphicon glyphicon-forward"></span></button>
+                      </div>
+                  </div>
+      </div>
+          </div>
+          </dictionary-component>
+          </div>  
+          
+          <div v-if="currentTab==1">
+            <techno-component inline-template>
+            <div class="col-md-12" @keyup.enter="createTechno()">
+            <div>
+            <div class="col-md-6">
+                    <div class="form-group"> <!-- Full Name -->
+                        <label for="techno" class="control-label">techno</label>
+                        <input type="text"  ref="techno" class="form-control" id="techno" :disabled="disabled" v-model="technology" name="techno" placeholder="javascript">
+                        <label for="techno" class="control-label">active</label>
+                        <select id="active" :disabled="disabled" v-model="active">
+                            <option value="" selected>---</option> 
+                            <option value="0">inactive</option> 
+                            <option value="1">active</option>
+                         </select>
+                    </div>  
+                    <div class="form-group"> <!-- Submit Button -->
+                        <table class="col-md-12">
+                            <tr class="spaceBetweenTr">
+                                <td>
+                                    <button  type="submit" @click="createTechno()" class="btn btn-primary">save</button>
+                                </td>
+                                <td>
+                                    <div class="col-md-12">
+                                        <div class="col-md-6 radioButtonFixed"><input name="changeSort" value="saved" type="radio" @click="changeSort(0)" :checked="checked==0">Saved order</div>
+                                        <div class="col-md-6 radioButtonFixed"><input name="changeSort" value="alpha" type="radio" @click="changeSort(1)" :checked="checked==1">Alphabetical order</div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr class="spaceBetweenTr">
+                                <td>
+                                    <button  type="submit" @click="clearData()" class="btn btn-primary">clear</button>
+                                </td>
+                            </tr>
+                            <tr class="spaceBetweenTr">
+                                <td>
+                                    <button type="submit" @click="searchTechnos()" class="btn btn-primary">search</button>
+                                    <select class="" id="nQuestions" v-model="tSearch">
+                                <option value="0" selected>contains</option>
+                                <option value="1">begins</option> 
+                                <option value="2">ends</option>
+                                <option value="3">exact</option> 
+                             </select>
+                                </td>
+                            </tr>
+                        </table>
+                        <div class="col-md-12"  v-bind:class="[colorClass[colorOpt]]">{{messageData}}</div>
+                        
+                    </div>     
+                    
+                </div>
+            <div class="datagrid col-md-6 horizontalScroll">
+                <table class="col-md-12">
+                    <thead>
+                        <tr>
+                          <th>Technology</th><th>watch</th><th>edit</th><th>delete</th>
+                        </tr>
+                    </thead>
+                    <tbody v-for="(p, index) in listTechnos[currentItem]">
+                        <tr>
+                            <td>{{p.technology}}</td>
+                            <td><button type="submit" class="btn btn-primary" @click="readTechno(index)"><span class="glyphicon glyphicon-search"></span></button></td>
+                            <td><button type="submit" class="btn btn-primary" @click="updateTechno(index)"><span class="glyphicon glyphicon-pencil"></span></button></td>
+                            <td><button type="submit" class="btn btn-primary" @click="deleteTechno(index)"><span class="glyphicon glyphicon-remove"></span></button></td>
+                        </tr>
+                    </tbody>
+                    
+                    </table>
+                    <div class="col-md-12" style="padding: 0px;">
+                        <button class="col-md-2 btn btn-primary" @click="goFirst()"><span class="glyphicon glyphicon-backward"></span></button>
+                        <button class="col-md-2 btn btn-primary" @click="goBack()"><span class="glyphicon glyphicon-triangle-left"></span></button>
+                        <label class="col-md-4" style="text-align: center; padding: 0px;">
+                            <div class="col-md-12">{{currentItem+1}}/{{completeList.length}}</div>
+                            <div class="col-md-12">{{size}} words</div>
+                            </label>
+                        <button class="col-md-2 btn btn-primary" @click="goNext()"><span class="glyphicon glyphicon-triangle-right"></span></button>
+                        <button class="col-md-2 btn btn-primary" @click="goLast()"><span class="glyphicon glyphicon-forward"></span></button>
+                    </div>
+                </div>
+    </div>
+        </div>
+        </techno-component>
+        </div>
+        <div v-if="currentTab==2">
+            <test-component inline-template>
+                <div class="col-md-12"  @keydown="keyEvent"  style="font-size: x-large;">
+                    <div class="col-md-12">
+                        <div class="col-md-6">
+                <div class="form-group"> <!-- Full Name -->
+                  <label for="technology" class="control-label">technology</label>
+                  <select class="form-control" id="technology" v-model="techno_id" name="technology" v-on:change="updateTecho()">
+                    <option v-for="(t, index) in listTechnos" :value="t.techno_id">{{t.technology}}</option>
+                  </select>
+              </div>
+            </div>
+                        <label class="col-md-6">how many?:</label>
+                        <select class="col-md-6" id="nQuestions" v-model="nQuestions" v-on:change="reloadExam()">
+                                <option value="10">10</option> 
+                                <option value="20">20</option> 
+                                <option value="50">50</option>
+                                <option value="100" selected>100</option> 
+                                <option value="200">200</option> 
+                             </select>
+                </div>
+                <div class="col-md-12" v-if="currentQuestion!=null">
+                    <label class="col-md-12">TECHNOLOGY: {{currentQuestion.technology}}</label>
+                    <label class="col-md-12">WORD: {{currentQuestion.word}}</label>
+                    <div class="col-md-12" v-for="(c, index) in currentQuestion.opts">
+                        <input name="solOpt" value="0" type="radio" @click="updateSol(index)" class="col-md-1 no-side-margins" :checked="checked==index" :disabled="checked!=-1">
+                        <textarea rows="5" cols="75" id="translation" disabled="true" v-bind:class="colorOpt(index)" style="font-weight:500;" name="disabled-content">{{c}}</textarea>
+                    </div>
+                </div>
+                <div class="col-md-12" v-bind:class="[colorClass[nColor]]">{{currentMessage}}</div>
+                <div class="col-md-12">
+                    <label class="col-md-6" v-bind:style="{color: activeColor()}">{{correct}} / {{nQuestion}}</label><button class="col-md-6 btn-primary" @click="nextWord()">next</button>
+                </div>
+                </div>
+            </test-component>
+        </div> 
+                        
+                    </div>
+                    
+                
+            </navbar-component>
+
+            </div>
+            <div  v-if="showLogin">
+                <login-component inline-template>
+                        <div class="col-md-12">
+                <div v-if="currentView" class="col-md-4 col-centered" >
+                    <div class="col-md-6"><label>email</label></div>
+                    <div class="col-md-6"><input  class="form-control" type="text" v-model="mail"></div>
+                    <div class="col-md-6"><label>password</label></div>
+                    <div class="col-md-6"><input class="form-control" type="password" v-model="pass"></div>
+                    <div class="col-md-12"><button class="form-control"  v-on:click="login()">login</button></div>
+                    <div class="col-md-12" v-show="visibleMessage" v-bind:class="[colorClass[colorOpt]]">{{message}}</div>
+                </div>
+                
+            </div>
+                
+            
+            </login-component>
+            </div>
+            
+            
+            
+            
+        </div>
+        
+          <div style="padding:10px;">This is a website developed by Oscar Andrés Russi Porras</div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <script  src="index.js" type="module" ></script>
+       
+    <script>
+    //$(document).ready(function () {
+      //  $("div[data-includeHTML]").each(function () {                
+        //    $(this).load($(this).attr("data-includeHTML"));
+        //});
+    //});
+</script>
+    </body>
+</html>
