@@ -6,13 +6,14 @@ import Login from './Login';
 import Main from './Main';
 
 function App() {
+  
   return (
     <Switch>
     <Route exact path="/login">
-    <Login message="this is login" />
+    <Login option="login" />
     </Route>
     <Route exact path="/signup">
-    <Login message="this is signup" />
+    <Login option="signup" />
     </Route>
     <Route exact path="/">
     <Main />

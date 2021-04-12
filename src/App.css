@@ -10,6 +10,7 @@
 .login-div{
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
+  margin-top: 50px;
 }
 
 .login-div > * {
@@ -19,6 +20,11 @@
 .form-login {
   display: grid;
   grid-template-columns: 1fr 1fr;
+}
+
+.form-login > * {
+  margin-top: 5px;
+  margin-bottom: 5px;
 }
 
 @media (prefers-reduced-motion: no-preference) {
