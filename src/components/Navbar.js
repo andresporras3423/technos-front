@@ -2,7 +2,7 @@ function Navbar() {
   return (
     <div className="col-md-12" id="barNav">
                 <nav className="navbar navbar-blue">
-              <ul className="nav navbar-nav">
+              <ul className="nav navbar-nav ul-inline">
                 <li className="active menuDesktop" onClick="newTab(0)"><a href="#" className="currentTab==0 ? linkBackColor: ''">Words</a></li>
                 <li className="menuDesktop"><a href="#" onClick="newTab(1)" className="currentTab==1 ? linkBackColor: ''">Technologies</a></li>
                 <li className="menuDesktop"><a href="#" onClick="newTab(2)" className="currentTab==2 ? linkBackColor: ''">Tests</a></li>
