@@ -1,4 +1,4 @@
-function Main() {
+function Dashboard() {
   return (
     <div>
      this is main
@@ -6,4 +6,4 @@ function Main() {
   );
 }
 
-export default Main;
+export default Dashboard;
