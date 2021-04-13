@@ -9,7 +9,6 @@ function Navbar() {
       <span>Exit</span>
     </nav>
     <select class="nav-select">
-    <option>Menu</option>
       <option>Words</option>
       <option>Technologies</option>
       <option>Tests</option>
