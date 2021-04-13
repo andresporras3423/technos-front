@@ -48,6 +48,22 @@
   color: #61dafb;
 }
 
+.links-container{
+  background-color: black;
+  color: white;
+  display: flex;
+}
+
+.links-container > * {
+  margin: 15px;
+}
+
+.links-container > *:hover {
+  cursor: pointer;
+  text-decoration: underline;
+  text-decoration-color: white;
+}
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
