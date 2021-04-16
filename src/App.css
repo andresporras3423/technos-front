@@ -90,6 +90,7 @@
 .formContainer{
   display: grid;
   grid-template-columns: 1fr;
+  height: 449px;
 }
 
 .formContainer > *{
@@ -104,15 +105,24 @@
   margin: 10px;
 }
 
+/* .fiveColumns{
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+} */
+
+.fiveColumns > * > * {
+  width: 100px;
+}
+
 @media screen and (min-width: 501px) {
   .nav-select{
-      display : none; 
+      display : none;
   }
 }
 
 @media screen and (max-width: 500px) {
    .links-container{
-      display : none; 
+      display : none;
   }
 }
 
