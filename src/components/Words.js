@@ -67,42 +67,30 @@ function Words() {
                                     <tr>
                                         <td>{word.technology}</td>
                                         <td>{word.word}</td>
-                                        <td><i class="fas fa-search"></i></td>
-                                        <td><i class="fas fa-edit"></i></td>
-                                        <td><i class="fas fa-trash-alt"></i></td>
+                                        <td><i className="fas fa-search"></i></td>
+                                        <td><i className="fas fa-edit"></i></td>
+                                        <td><i className="fas fa-trash-alt"></i></td>
                                     </tr>
                                 )
                             )
                         }
                     </tbody>
-                    <tfoot>
-                        <tr className="fiveColumns">
-                            <td>
-                            <button className="btn btn-dark">
+                </table>
+                <div className="fiveColumns">
+                    <button className="btn btn-dark">
                         <i className="fas fa-fast-backward"></i>
                         </button>
-                            </td>
-                            <td>
-                            <button className="btn btn-dark">
+                        <button className="btn btn-dark">
                         <i className="fas fa-step-backward"></i>
                         </button>
-                            </td>
-                            <td>
-                            <span>5/10</span>
-                            </td>
-                            <td>
-                            <button className="btn btn-dark">
+                        <span>5/10</span>
+                        <button className="btn btn-dark">
                         <i className="fas fa-step-forward"></i>
                         </button>
-                            </td>
-                            <td>
-                            <button className="btn btn-dark">
+                        <button className="btn btn-dark">
                         <i className="fas fa-fast-forward"></i>
                         </button>
-                            </td>
-                        </tr>
-                    </tfoot>
-                </table>
+                    </div>
             </div>
         </div>
       </div>

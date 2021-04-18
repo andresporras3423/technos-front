@@ -1,29 +1,26 @@
 function Technologies() {
-    const listWords = [
-        {"word": "abc", "technology": "cdf"},
-        {"word": "abc", "technology": "cdf"},
-        {"word": "abc", "technology": "cdf"},
-        {"word": "abc", "technology": "cdf"},
-        {"word": "abc", "technology": "cdf"},
-        {"word": "abc", "technology": "cdf"},
-        {"word": "abc", "technology": "cdf"},
-        {"word": "abc", "technology": "cdf"},
-        {"word": "abc", "technology": "cdf"},
-        {"word": "abc", "technology": "cdf"}
+    const listTechnos = [
+        {"technology": "cdf"},
+        {"technology": "cdf"},
+        {"technology": "cdf"},
+        {"technology": "cdf"},
+        {"technology": "cdf"},
+        {"technology": "cdf"},
+        {"technology": "cdf"},
+        {"technology": "cdf"},
+        {"technology": "cdf"},
+        {"technology": "cdf"},
     ];
     return (
       <div className="wordDiv">
-          <div className="formContainer">
+          <div className="formContainer2">
               <label><strong>Technology</strong></label>
+              <input type="text"></input>
+              <label><strong>Status</strong></label>
               <select>
-                  <option value="0">0</option>
-                  <option value="1">1</option>
-                  <option value="2">2</option>
+                  <option value="0">Active</option>
+                  <option value="1">Inactive</option>
               </select>
-              <label><strong>Word</strong></label>
-              <input></input>
-              <label><strong>Meaning</strong></label>
-              <textarea cols="20" rows="3"></textarea>
               <div className="twoButtons">
                   <button className="btn btn-dark">Save</button>
                   <button className="btn btn-dark">clear</button>
@@ -50,11 +47,10 @@ function Technologies() {
         <div className="tableContainer">
             
             <div>
-                <table className="table tableContent">
+                <table className="table tableContent tableContent2">
                     <thead className="thead-dark">
                         <tr>
                             <th>Technology</th>
-                            <th>Word</th>
                             <th>Watch</th>
                             <th>Edit</th>
                             <th>Delete</th>
@@ -62,47 +58,34 @@ function Technologies() {
                     </thead>
                     <tbody>
                         {
-                            listWords.map(
-                                (word)=>(
+                            listTechnos.map(
+                                (techno)=>(
                                     <tr>
-                                        <td>{word.technology}</td>
-                                        <td>{word.word}</td>
-                                        <td><i class="fas fa-search"></i></td>
-                                        <td><i class="fas fa-edit"></i></td>
-                                        <td><i class="fas fa-trash-alt"></i></td>
+                                        <td>{techno.technology}</td>
+                                        <td><i className="fas fa-search"></i></td>
+                                        <td><i className="fas fa-edit"></i></td>
+                                        <td><i className="fas fa-trash-alt"></i></td>
                                     </tr>
                                 )
                             )
                         }
                     </tbody>
-                    <tfoot>
-                        <tr className="fiveColumns">
-                            <td>
-                            <button className="btn btn-dark">
+                </table>
+                <div className="fiveColumns">
+                    <button className="btn btn-dark">
                         <i className="fas fa-fast-backward"></i>
                         </button>
-                            </td>
-                            <td>
-                            <button className="btn btn-dark">
+                        <button className="btn btn-dark">
                         <i className="fas fa-step-backward"></i>
                         </button>
-                            </td>
-                            <td>
-                            <span>5/10</span>
-                            </td>
-                            <td>
-                            <button className="btn btn-dark">
+                        <span>5/10</span>
+                        <button className="btn btn-dark">
                         <i className="fas fa-step-forward"></i>
                         </button>
-                            </td>
-                            <td>
-                            <button className="btn btn-dark">
+                        <button className="btn btn-dark">
                         <i className="fas fa-fast-forward"></i>
                         </button>
-                            </td>
-                        </tr>
-                    </tfoot>
-                </table>
+                    </div>
             </div>
         </div>
       </div>

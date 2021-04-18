@@ -1,19 +1,19 @@
 function Navbar(props) {
   const {setSelected} = props;
   
-  const updateSelected = ()=>{
-    
+  const updateSelected = (e)=>{
+    setSelected(e.target.value);
   };
   return (
     <div>
       <nav class="links-container">
-      <span onClick={()=>setSelected(0)}>Words</span>
-      <span onClick={()=>setSelected(1)}>Technologies</span>
-      <span onClick={()=>setSelected(2)}>Tests</span>
-      <span onClick={()=>setSelected(3)}>History</span>
-      <span onClick={()=>setSelected(4)}>Exit</span>
+      <span onClick={()=>setSelected("0")}>Words</span>
+      <span onClick={()=>setSelected("1")}>Technologies</span>
+      <span onClick={()=>setSelected("2")}>Tests</span>
+      <span onClick={()=>setSelected("3")}>History</span>
+      <span onClick={()=>setSelected("4")}>Exit</span>
     </nav>
-    <select class="nav-select">
+    <select class="nav-select" onChange={updateSelected}>
       <option value='0'>Words</option>
       <option value='1'>Technologies</option>
       <option value='2'>Tests</option>
