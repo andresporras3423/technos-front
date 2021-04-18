@@ -2,6 +2,7 @@ import {useState} from 'react';
 import Navbar from './Navbar';
 import Words from './Words';
 import Technologies from './Technologies';
+import Test from './Test';
 
 function Dashboard() {
   const [selected, setSelected]=useState("0");
@@ -16,6 +17,9 @@ function Dashboard() {
         }
         else if(selected==="1"){
           return (<Technologies/>);
+        }
+        else if(selected==="2"){
+          return (<Test/>);
         }
         else return (<></>);
       }
