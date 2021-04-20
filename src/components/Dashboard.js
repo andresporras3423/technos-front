@@ -4,10 +4,11 @@ import Words from './Words';
 import Technologies from './Technologies';
 import Test from './Test';
 import History from './History';
+import { useHistory } from "react-router-dom";
 
 function Dashboard() {
   const [selected, setSelected]=useState("0");
-  
+  const history = useHistory();
   return (
     <div>
      <Navbar setSelected={setSelected}/>
@@ -25,7 +26,9 @@ function Dashboard() {
         else if(selected==="3"){
           return (<History/>);
         }
-        else return (<></>);
+        else return (<>
+        {history.push("/login")}
+        </>);
       }
      )()}
     </div>

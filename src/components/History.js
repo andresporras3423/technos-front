@@ -1,5 +1,3 @@
-import Test from "./Test";
-
 function History() {
     const listTests = [
         {"date": "12/31/2020", "correct": "5", "total": "10"},
