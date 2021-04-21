@@ -1,6 +1,10 @@
+import { useHistory } from "react-router-dom";
 function Login(props) {
     const {option} = props;
     const options = new Object();
+    options['signup']= {'message': `Already have an account? go to login`, 'link': '/login'};
+    options['login']= {'message': `Don't have an account? go to sign up`, 'link': '/signup'};
+    const history = useHistory();
   
     const name = () => {
       if (option==="signup") {
@@ -28,6 +32,12 @@ function Login(props) {
       return <></>;
     };
 
+    const linkTo = ()=>{
+      return (
+          <a href="" onClick={()=>history.push(options[option].link)}>{options[option].message}</a>
+        )
+    };
+
   return (
     <div className="col-md-12 login-div">
                 <div  className="form-login" >
@@ -39,6 +49,7 @@ function Login(props) {
                     {passwordConfirmation()}
                 </div>      
                 <div><button className="form-control">{option}</button></div>
+                {linkTo()}
     </div>
   );
 }
