@@ -32,10 +32,8 @@ function Login(props) {
       return <></>;
     };
 
-    const linkTo = ()=>{
-      return (
-          <a href="" onClick={()=>history.push(options[option].link)}>{options[option].message}</a>
-        )
+    const loginForm = ()=>{
+      history.push('');
     };
 
   return (
@@ -48,8 +46,8 @@ function Login(props) {
                     <input className="form-control" type="password"/>
                     {passwordConfirmation()}
                 </div>      
-                <div><button className="form-control">{option}</button></div>
-                {linkTo()}
+                <div><button className="form-control" onClick={loginForm}>{option}</button></div>
+                <a href="" onClick={()=>history.push(options[option].link)}>{options[option].message}</a>
     </div>
   );
 }
