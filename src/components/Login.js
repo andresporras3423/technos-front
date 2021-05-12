@@ -1,4 +1,5 @@
 import { useHistory } from "react-router-dom";
+import {createSession} from "./../data/sessionData";
 function Login(props) {
     const {option} = props;
     const options = new Object();
@@ -33,6 +34,7 @@ function Login(props) {
     };
 
     const loginForm = ()=>{
+      //createUser('','','','');
       history.push('');
     };
 
