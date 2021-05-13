@@ -6,14 +6,14 @@ function Navbar(props) {
   };
   return (
     <div>
-      <nav class="links-container">
+      <nav className="links-container">
       <span onClick={()=>setSelected("0")}>Words</span>
       <span onClick={()=>setSelected("1")}>Technologies</span>
       <span onClick={()=>setSelected("2")}>Tests</span>
       <span onClick={()=>setSelected("3")}>History</span>
       <span onClick={()=>setSelected("4")}>Exit</span>
     </nav>
-    <select class="nav-select" onChange={updateSelected}>
+    <select className="nav-select" onChange={updateSelected}>
       <option value='0'>Words</option>
       <option value='1'>Technologies</option>
       <option value='2'>Tests</option>

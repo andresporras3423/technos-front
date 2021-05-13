@@ -31,7 +31,9 @@ export const searchWord = async (sort_by_word, search, word, translation, techno
         headers: {
           Accept: 'application/json',
           'Content-Type': 'application/json',
-        }
+          'id': localStorage.getItem('id'),
+          'remember_token': localStorage.getItem('remember_token'),
+        },
       });
       const data = await response;
       debugger;

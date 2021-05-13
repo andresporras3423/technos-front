@@ -3,9 +3,9 @@ export const createSession = async (email, password) => {
         method: 'POST',
         headers: {
           Accept: 'application/json',
-          'Content-Type': 'application/json',
+          'Content-Type': 'application/json'
         },
-        body: JSON.stringify({email: email, password: password})
+        body: JSON.stringify({email: email, password: password}),
       });
       const data = await response;
       return data;
@@ -17,7 +17,7 @@ export const createSession = async (email, password) => {
         headers: {
           Accept: 'application/json',
           'Content-Type': 'application/json',
-        }
+        },
       });
       const data = await response;
       return data;
