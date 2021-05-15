@@ -1,3 +1,5 @@
+import { nanoid } from 'nanoid';
+
 function Technologies() {
     const listTechnos = [
         {"technology": "cdf"},
@@ -36,11 +38,11 @@ function Technologies() {
               <div className="radioContainer">
                 <div>
                   <input type="radio" id="saved" name="order" value="0" />
-                  <label for="saved">Saved order</label>
+                  <label htmlFor="saved">Saved order</label>
                 </div>
                 <div>
                   <input type="radio" id="alphabet" name="order" value="1" />
-                  <label for="alphabet">Alphabetical order</label>
+                  <label htmlFor="alphabet">Alphabetical order</label>
                 </div>
             </div>
         </div>
@@ -60,7 +62,7 @@ function Technologies() {
                         {
                             listTechnos.map(
                                 (techno)=>(
-                                    <tr>
+                                    <tr key={nanoid()}>
                                         <td>{techno.technology}</td>
                                         <td><i className="fas fa-search"></i></td>
                                         <td><i className="fas fa-edit"></i></td>

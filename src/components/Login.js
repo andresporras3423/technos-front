@@ -1,7 +1,6 @@
 import {useState} from 'react';
 import { useHistory } from "react-router-dom";
 import {createSession} from "./../data/sessionData";
-import {indexUser} from "./../data/userData";
 function Login(props) {
     const {option} = props;
     const options = new Object();
@@ -42,14 +41,11 @@ function Login(props) {
 
     const loginForm = async ()=>{
       //createUser('','','','');
-      debugger;
       const data = await createSession(email, password);
       // const data2 = await indexUser();
       // console.log(data2);
       if(data.status===401) setStatusMessage("The user doesn't exists or password is not correct");
       else {
-        localStorage.setItem('id', data.id);
-        localStorage.setItem('remember_token', data.remember_token);
         history.push('');
       }
     };

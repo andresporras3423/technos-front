@@ -4,26 +4,31 @@ import Words from './Words';
 import Technologies from './Technologies';
 import Test from './Test';
 import History from './History';
-import { useHistory } from "react-router-dom";
 import {searchWord} from "./../data/wordData";
+import { useHistory } from "react-router-dom";
 
 function Dashboard() {
   const [selected, setSelected]=useState("0");
-  const [words, setWords]=useState([]);
+  const [listWords, setListWords]=useState([]);
   const history = useHistory();
 
-  useEffect(async () => {
-    const listWords = await searchWord('word', 1, '', '', -1, history);
-    setWords(listWords);
-  }, []);
-  if (words.length===0) return (<></>);
+    useEffect(() => {
+      (
+        async ()=>{
+          const list = await searchWord(true, 1, '', '', -1, history);
+          setListWords(list);
+        }
+      )();
+      }, []);
+
+  if (listWords.length===0) return (<></>);
   return (
     <div>
      <Navbar setSelected={setSelected}/>
      {(
        ()=>{
         if(selected==="0"){
-            return (<Words/>);
+            return (<Words listWords={listWords} setListWords={setListWords} />);
         }
         else if(selected==="1"){
           return (<Technologies/>);
@@ -34,9 +39,6 @@ function Dashboard() {
         else if(selected==="3"){
           return (<History/>);
         }
-        else return (<>
-        {history.push("/login")}
-        </>);
       }
      )()}
     </div>

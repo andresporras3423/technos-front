@@ -1,4 +1,7 @@
-function Words() {
+import { nanoid } from 'nanoid';
+
+function Words(props) {
+    // const {listWords, setListWords} = props;
     const listWords = [
         {"word": "abc", "technology": "cdf"},
         {"word": "abc", "technology": "cdf"},
@@ -11,6 +14,7 @@ function Words() {
         {"word": "abc", "technology": "cdf"},
         {"word": "abc", "technology": "cdf"}
     ];
+
     return (
       <div className="wordDiv">
           <div className="formContainer">
@@ -39,11 +43,11 @@ function Words() {
               <div className="radioContainer">
                 <div>
                   <input type="radio" id="saved" name="order" value="0" />
-                  <label for="saved">Saved order</label>
+                  <label htmlFor="saved">Saved order</label>
                 </div>
                 <div>
                   <input type="radio" id="alphabet" name="order" value="1" />
-                  <label for="alphabet">Alphabetical order</label>
+                  <label htmlFor="alphabet">Alphabetical order</label>
                 </div>
             </div>
         </div>
@@ -64,7 +68,7 @@ function Words() {
                         {
                             listWords.map(
                                 (word)=>(
-                                    <tr>
+                                    <tr key={nanoid()}>
                                         <td>{word.technology}</td>
                                         <td>{word.word}</td>
                                         <td><i className="fas fa-search"></i></td>

@@ -25,18 +25,17 @@ export const updateWord = async (id, word, translation, techno_id) => {
 };
 
 export const searchWord = async (sort_by_word, search, word, translation, techno_id, history) => {
-    const params = ( new URLSearchParams( {sort_by_word: sort_by_word, search: search, word: word, translation: translation, techno_id: techno_id} ) ).toString();
-    const response = await fetch(`https://hidden-plateau-07048.herokuapp.com/word/search?${params}`, {
-        method: 'GET',
+    const response = await fetch(`https://hidden-plateau-07048.herokuapp.com/word/search`, {
+        method: 'POST',
         headers: {
           Accept: 'application/json',
           'Content-Type': 'application/json',
           'id': localStorage.getItem('id'),
           'remember_token': localStorage.getItem('remember_token'),
         },
+        body: JSON.stringify({sort_by_word: sort_by_word, search: search, word: word, translation: translation, techno_id: techno_id} )
       });
       const data = await response;
-      debugger;
       if(data.status===401) history.push('/login');
       return data;
 };

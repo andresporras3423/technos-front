@@ -1,3 +1,5 @@
+import { nanoid } from 'nanoid';
+
 function History() {
     const listTests = [
         {"date": "12/31/2020", "correct": "5", "total": "10"},
@@ -35,7 +37,7 @@ function History() {
                         {
                             listTests.map(
                                 (test)=>(
-                                    <tr style={{backgroundColor: test.correct/test.total <= 0.5 ? `rgb(255,${parseInt(255*(test.correct/test.total))},0)`: `rgb(${parseInt(255-(255*(test.correct/test.total)))}, 255,0)`}}>
+                                    <tr style={{backgroundColor: test.correct/test.total <= 0.5 ? `rgb(255,${parseInt(255*(test.correct/test.total))},0)`: `rgb(${parseInt(255-(255*(test.correct/test.total)))}, 255,0)`}} key={nanoid()}>
                                         <td>{test.date}</td>
                                         <td>{test.correct}</td>
                                         <td>{test.total}</td>
