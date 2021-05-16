@@ -30,9 +30,11 @@ export const getTechno = async (sort_by_name) => {
         headers: {
           Accept: 'application/json',
           'Content-Type': 'application/json',
+          'id': localStorage.getItem('id'),
+          'token': localStorage.getItem('token'),
         }
       });
-      const data = await response;
+      const data = await response.json();
       return data;
 };
 

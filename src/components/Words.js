@@ -1,7 +1,20 @@
+import {useState, useEffect} from 'react';
 import { nanoid } from 'nanoid';
+import {getTechno} from "./../data/technoData";
 
 function Words(props) {
-    // const {listWords, setListWords} = props;
+    //const {listWords, setListWords} = props;
+    const [listTechnos, setListTechnos] = useState([]);
+    useEffect(() => {
+        (
+          async ()=>{
+            const list = await getTechno(true);
+            setListTechnos(list);
+            debugger;
+          }
+        )();
+        }, []);
+
     const listWords = [
         {"word": "abc", "technology": "cdf"},
         {"word": "abc", "technology": "cdf"},
@@ -15,14 +28,17 @@ function Words(props) {
         {"word": "abc", "technology": "cdf"}
     ];
 
-    return (
+    if (listTechnos.length===0) return (<></>);
+    else return (
       <div className="wordDiv">
           <div className="formContainer">
               <label><strong>Technology</strong></label>
               <select>
-                  <option value="0">0</option>
-                  <option value="1">1</option>
-                  <option value="2">2</option>
+                  {
+                      listTechnos.map((tech)=>(
+                        <option value={tech.id} key={nanoid()}>{tech.techno_name}</option>
+                      ))
+                  }
               </select>
               <label><strong>Word</strong></label>
               <input></input>
