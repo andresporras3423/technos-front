@@ -17,9 +17,11 @@ export const indexUser = async () => {
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json',
+        'id': localStorage.getItem('id'),
+        'token': localStorage.getItem('token'),
       },
     });
-    const data = await response.json();
+    const data = await response;
     return data;
 };
 

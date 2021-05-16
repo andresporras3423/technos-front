@@ -1,6 +1,7 @@
-import {useState} from 'react';
+import {useState, useEffect} from 'react';
 import { useHistory } from "react-router-dom";
 import {createSession} from "./../data/sessionData";
+import {indexUser} from './../data/userData';
 function Login(props) {
     const {option} = props;
     const options = new Object();
@@ -12,6 +13,15 @@ function Login(props) {
     const [password, setPassword] = useState('');
     const [passwordConfirmation, setPasswordConfirmation] = useState('');
     const [email, setEmail] = useState('');
+
+    useEffect(() => {
+      (
+        async ()=>{
+          const data = await indexUser();
+          if(data.status===200) history.push('');
+        }
+      )();
+      }, []);
   
     const name = () => {
       if (option==="signup") {

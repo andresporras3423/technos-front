@@ -10,13 +10,11 @@ export const createSession = async (email, password) => {
       })
       .then((data)=>{
           dataResponse=data;
-          debugger;
           return  data.json();
             })
             .then((loginData)=>{
-              debugger;
               localStorage.setItem('id', loginData.id);
-              localStorage.setItem('remember_token', loginData.remember_token);
+              localStorage.setItem('token', loginData.remember_token);
             });
             await response;
             return dataResponse;
@@ -29,12 +27,12 @@ export const createSession = async (email, password) => {
           Accept: 'application/json',
           'Content-Type': 'application/json',
           'id': localStorage.getItem('id'),
-          'remember_token': localStorage.getItem('remember_token'),
+          'token': localStorage.getItem('token'),
         },
       });
       const data = await response;
       localStorage.removeItem('id')
-      localStorage.removeItem('remember_token');
+      localStorage.removeItem('token');
       return data;
   };
 
