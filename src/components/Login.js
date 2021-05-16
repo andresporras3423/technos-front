@@ -1,7 +1,7 @@
 import {useState, useEffect} from 'react';
 import { useHistory } from "react-router-dom";
 import {createSession} from "./../data/sessionData";
-import {indexUser} from './../data/userData';
+import {indexUser, createUser} from './../data/userData';
 function Login(props) {
     const {option} = props;
     const options = new Object();
@@ -30,7 +30,7 @@ function Login(props) {
         return (
           <>
             <label>Name: </label>
-            <input  className="form-control" type="text"/>
+            <input  className="form-control" type="text" onChange={(e)=>setUsername(e.target.value)}/>
           </>
         );
       }
@@ -43,18 +43,35 @@ function Login(props) {
         return (
           <>
             <label>Password confirmation: </label>
-            <input className="form-control" type="password"/>
+            <input className="form-control" type="password" onChange={(e)=>setPasswordConfirmation(e.target.value)} />
           </>
         );
       }
       return <></>;
     };
 
-    const loginForm = async ()=>{
+    const startLogin = async ()=>{
       const data = await createSession(email, password);
-      if(data.status===401) setStatusMessage("The user doesn't exists or password is not correct");
-      else {
-        history.push('');
+        if(data.status===401) setStatusMessage("The user doesn't exists or password is not correct");
+        else {
+          history.push('');
+        }
+    };
+
+    const loginForm = async ()=>{
+      if(option==="login"){
+        await startLogin();
+      }
+      else{
+        const data = await createUser(username, email, password, passwordConfirmation);
+        if(data.status===409){
+          let nMessage = "";
+          Object.entries(data.errors).forEach((item)=>{
+            nMessage+=`${item[0]}: ${item[1]}</br>`;
+          });
+          setStatusMessage(nMessage);
+        } 
+        else await startLogin();
       }
     };
   if(logged) return (<></>);
@@ -70,7 +87,9 @@ function Login(props) {
                 </div>      
                 <div><button className="form-control" onClick={loginForm}>{option}</button></div>
                 <a href="" onClick={()=>history.push(options[option].link)}>{options[option].message}</a>
-                <div>{statusMessage}</div>
+                <div>
+                  <pre dangerouslySetInnerHTML={{ __html: statusMessage }}></pre>
+                </div>
     </div>
   );
 }
