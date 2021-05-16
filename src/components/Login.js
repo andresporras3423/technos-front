@@ -11,6 +11,7 @@ function Login(props) {
     const [statusMessage, setStatusMessage] = useState('');
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+    const [logged, setLogged] = useState(true)
     const [passwordConfirmation, setPasswordConfirmation] = useState('');
     const [email, setEmail] = useState('');
 
@@ -19,6 +20,7 @@ function Login(props) {
         async ()=>{
           const data = await indexUser();
           if(data.status===200) history.push('');
+          else setLogged(false);
         }
       )();
       }, []);
@@ -45,22 +47,18 @@ function Login(props) {
           </>
         );
       }
-  
       return <></>;
     };
 
     const loginForm = async ()=>{
-      //createUser('','','','');
       const data = await createSession(email, password);
-      // const data2 = await indexUser();
-      // console.log(data2);
       if(data.status===401) setStatusMessage("The user doesn't exists or password is not correct");
       else {
         history.push('');
       }
     };
-
-  return (
+  if(logged) return (<></>);
+  else return (
     <div className="col-md-12 login-div">
                 <div  className="form-login" >
                   {name()}
