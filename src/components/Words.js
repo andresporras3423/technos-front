@@ -9,6 +9,16 @@ function Words(props) {
     const [groupedWords, setGroupedWords] = useState({});
     const [currentPage, setCurrentPage] = useState(1);
     const [groupLen, setGroupLen] = useState(-1);
+    const [nWord, setNWord] = useState('');
+    const [nTranslation, setNTranslation] = useState('');
+    const [nTechnoId, setNTechnoId] = useState("");
+
+    const clearForm = ()=>{
+        setNWord('');
+        setNTranslation('');
+        setNTechnoId("");
+    };
+
     useEffect(() => {
         (
           async ()=>{
@@ -37,7 +47,8 @@ function Words(props) {
       <div className="wordDiv">
           <div className="formContainer">
               <label><strong>Technology</strong></label>
-              <select>
+              <select value={nTechnoId} onChange={(e)=>setNTechnoId(e.target.value)}>
+                  <option disabled value="">select a techno</option>
                   {
                       listTechnos.map((tech)=>(
                         <option value={tech.id} key={nanoid()}>{tech.techno_name}</option>
@@ -45,12 +56,12 @@ function Words(props) {
                   }
               </select>
               <label><strong>Word</strong></label>
-              <input></input>
+              <input value={nWord} onChange={(e)=>setNWord(e.target.value)}></input>
               <label><strong>Meaning</strong></label>
-              <textarea cols="20" rows="3"></textarea>
+              <textarea cols="20" rows="3" value={nTranslation} onChange={(e)=>setNTranslation(e.target.value)}></textarea>
               <div className="twoButtons">
                   <button className="btn btn-dark">Save</button>
-                  <button className="btn btn-dark">clear</button>
+                  <button className="btn btn-dark" onClick={clearForm}>clear</button>
               </div>
               <div className="twoButtons">
                   <button className="btn btn-dark">Search</button>

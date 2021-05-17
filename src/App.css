@@ -93,7 +93,7 @@
   height: 449px;
 }
 
-.formContainer2{
+.formContainer2 {
   display: grid;
   grid-template-columns: 1fr;
   height: 389px;
@@ -111,13 +111,14 @@
   margin: 10px;
 }
 
-.tableContent {
+/* .tableContent {
   table-layout: fixed;
-}
-.tableContent2 > thead > tr > *,
+} */
+
+/* .tableContent2 > thead > tr > *,
 .tableContent2 > tbody > tr > * {
   width: 25%;
-} 
+}  */
 
 .fiveColumns{
   display: grid;
