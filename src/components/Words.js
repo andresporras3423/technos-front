@@ -8,6 +8,7 @@ function Words(props) {
     const [technosHash, setTechnosHash] = useState({});
     const [groupedWords, setGroupedWords] = useState({});
     const [currentPage, setCurrentPage] = useState(1);
+    const [groupLen, setGroupLen] = useState(-1);
     useEffect(() => {
         (
           async ()=>{
@@ -18,7 +19,7 @@ function Words(props) {
                 else grouped[j].push(listWords[i]);
                 if(i%10===9) j+=1;
             }
-            debugger;
+            setGroupLen(Object.keys(grouped).length);
             setGroupedWords(grouped);
             let list = await getTechno(true);
             let listHash = {};
@@ -100,19 +101,19 @@ function Words(props) {
                     </tbody>
                 </table>
                 <div className="fiveColumns">
-                    <button className="btn btn-dark">
+                    <button className="btn btn-dark" onClick={()=>setCurrentPage(1)}>
                         <i className="fas fa-fast-backward"></i>
-                        </button>
-                        <button className="btn btn-dark">
+                    </button>
+                    <button className="btn btn-dark" onClick={()=>{if(currentPage>1) setCurrentPage(currentPage-1)}}>
                         <i className="fas fa-step-backward"></i>
-                        </button>
-                        <span>5/10</span>
-                        <button className="btn btn-dark">
+                    </button>
+                    <span>{currentPage}/{groupLen}</span>
+                    <button className="btn btn-dark" onClick={()=>{if(currentPage<groupLen) setCurrentPage(currentPage+1)}}>
                         <i className="fas fa-step-forward"></i>
-                        </button>
-                        <button className="btn btn-dark">
+                    </button>
+                    <button className="btn btn-dark" onClick={()=>setCurrentPage(groupLen)}>
                         <i className="fas fa-fast-forward"></i>
-                        </button>
+                    </button>
                     </div>
             </div>
         </div>
