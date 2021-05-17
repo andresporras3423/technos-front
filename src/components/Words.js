@@ -3,30 +3,33 @@ import { nanoid } from 'nanoid';
 import {getTechno} from "./../data/technoData";
 
 function Words(props) {
-    //const {listWords, setListWords} = props;
+    const {listWords, setListWords} = props;
     const [listTechnos, setListTechnos] = useState([]);
+    const [technosHash, setTechnosHash] = useState({});
+    const [groupedWords, setGroupedWords] = useState({});
+    const [currentPage, setCurrentPage] = useState(1);
     useEffect(() => {
         (
           async ()=>{
-            const list = await getTechno(true);
-            setListTechnos(list);
+            const grouped = {};
+            let j=1;
+            for(let i=0; i<listWords.length; i+=1){
+                if(grouped[j]===undefined) grouped[j]=[listWords[i]];
+                else grouped[j].push(listWords[i]);
+                if(i%10===9) j+=1;
+            }
             debugger;
+            setGroupedWords(grouped);
+            let list = await getTechno(true);
+            let listHash = {};
+            list.forEach((item)=>{
+                listHash[item.id]=item.techno_name;
+            });
+            setTechnosHash(listHash);
+            setListTechnos(list);
           }
         )();
         }, []);
-
-    const listWords = [
-        {"word": "abc", "technology": "cdf"},
-        {"word": "abc", "technology": "cdf"},
-        {"word": "abc", "technology": "cdf"},
-        {"word": "abc", "technology": "cdf"},
-        {"word": "abc", "technology": "cdf"},
-        {"word": "abc", "technology": "cdf"},
-        {"word": "abc", "technology": "cdf"},
-        {"word": "abc", "technology": "cdf"},
-        {"word": "abc", "technology": "cdf"},
-        {"word": "abc", "technology": "cdf"}
-    ];
 
     if (listTechnos.length===0) return (<></>);
     else return (
@@ -82,10 +85,10 @@ function Words(props) {
                     </thead>
                     <tbody>
                         {
-                            listWords.map(
+                            groupedWords[currentPage].map(
                                 (word)=>(
                                     <tr key={nanoid()}>
-                                        <td>{word.technology}</td>
+                                        <td>{technosHash[word.techno_id]}</td>
                                         <td>{word.word}</td>
                                         <td><i className="fas fa-search"></i></td>
                                         <td><i className="fas fa-edit"></i></td>
