@@ -1,7 +1,7 @@
 import {useState, useEffect} from 'react';
 import { nanoid } from 'nanoid';
 import {getTechno} from "./../data/technoData";
-import {createWord, searchWord} from "./../data/wordData";
+import {createWord, deleteWord, searchWord} from "./../data/wordData";
 
 function Words(props) {
     const {refListWords, setListWords} = props;
@@ -25,9 +25,17 @@ function Words(props) {
         setNId(-1);
     };
 
+    const removeWord = async (id)=>{
+        if(window.confirm("Are you sure you want to remove this word?")){
+            await deleteWord(id);
+            setMessage("Word successfully removed!");
+            await searchWords();
+        }
+    }
+
     const searchWords= async ()=>{
-        debugger;
         const dataWords = await searchWord(sortType, parseInt(searchType), nWord, nTranslation, nTechnoId);
+        setCurrentPage(1);
         setListWords(dataWords.list);
         groupWords();
     };
@@ -141,7 +149,7 @@ function Words(props) {
                                         <td>{word.word}</td>
                                         <td><i className="fas fa-search"></i></td>
                                         <td><i className="fas fa-edit"></i></td>
-                                        <td><i className="fas fa-trash-alt"></i></td>
+                                        <td><i className="fas fa-trash-alt" onClick={async ()=> await removeWord(word.id)}></i></td>
                                     </tr>
                                 )
                             )

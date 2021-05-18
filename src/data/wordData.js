@@ -61,6 +61,8 @@ export const deleteWord = async (id) => {
         headers: {
           Accept: 'application/json',
           'Content-Type': 'application/json',
+          'id': localStorage.getItem('id'),
+          'token': localStorage.getItem('token'),
         }
       });
       const data = await response;

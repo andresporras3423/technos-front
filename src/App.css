@@ -68,6 +68,10 @@
   text-decoration-color: white;
 }
 
+i:hover {
+  cursor:pointer;
+}
+
 .nav-select {
   width: 100%;
   text-align:center;
