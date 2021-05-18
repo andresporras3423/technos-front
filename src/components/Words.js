@@ -17,13 +17,29 @@ function Words(props) {
     const [message, setMessage] = useState("");
     const [searchType, setSearchType] = useState(1);
     const [sortType, setSortType] = useState(false);
+    const [formDisabled, setformDisabled] = useState(false);
 
     const clearForm = ()=>{
-        setNWord('');
-        setNTranslation('');
-        setNTechnoId(-1);
-        setNId(-1);
+        setformDisabled(false);
+        valuesForm('', '', -1, -1);
     };
+
+    const lookWord = (word)=>{
+        valuesForm(word.word, word.translation, word.techno_id, word.id);
+        setformDisabled(true);
+    };
+
+    const updateWord = (word)=>{
+        valuesForm(word.word, word.translation, word.techno_id, word.id);
+        setformDisabled(false);
+    };
+
+    const valuesForm = (xWord, xTranslation, xTechnoId, xId)=>{
+        setNWord(xWord);
+        setNTranslation(xTranslation);
+        setNTechnoId(xTechnoId);
+        setNId(xId);
+    }
 
     const removeWord = async (id)=>{
         if(window.confirm("Are you sure you want to remove this word?")){
@@ -88,7 +104,7 @@ function Words(props) {
       <div className="wordDiv">
           <div className="formContainer">
               <label><strong>Technology</strong></label>
-              <select value={nTechnoId} onChange={(e)=>setNTechnoId(e.target.value)}>
+              <select value={nTechnoId} onChange={(e)=>setNTechnoId(e.target.value)} disabled={formDisabled}>
                   <option disabled value="-1">select a techno</option>
                   {
                       listTechnos.map((tech)=>(
@@ -97,9 +113,9 @@ function Words(props) {
                   }
               </select>
               <label><strong>Word</strong></label>
-              <input value={nWord} onChange={(e)=>setNWord(e.target.value)}></input>
+              <input value={nWord} onChange={(e)=>setNWord(e.target.value)}  disabled={formDisabled}></input>
               <label><strong>Meaning</strong></label>
-              <textarea cols="20" rows="3" value={nTranslation} onChange={(e)=>setNTranslation(e.target.value)}></textarea>
+              <textarea cols="20" rows="3" value={nTranslation} onChange={(e)=>setNTranslation(e.target.value)}  disabled={formDisabled}></textarea>
               <div className="twoButtons">
                   <button className="btn btn-dark" onClick={saveForm}>Save</button>
                   <button className="btn btn-dark" onClick={clearForm}>clear</button>
@@ -147,7 +163,7 @@ function Words(props) {
                                     <tr key={nanoid()}>
                                         <td>{technosHash[word.techno_id]}</td>
                                         <td>{word.word}</td>
-                                        <td><i className="fas fa-search"></i></td>
+                                        <td><i className="fas fa-search" onClick={async ()=> await lookWord(word)}></i></td>
                                         <td><i className="fas fa-edit"></i></td>
                                         <td><i className="fas fa-trash-alt" onClick={async ()=> await removeWord(word.id)}></i></td>
                                     </tr>
