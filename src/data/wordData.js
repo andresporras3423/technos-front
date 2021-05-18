@@ -34,7 +34,7 @@ export const updateWord = async (id, word, translation, techno_id) => {
       return data;
 };
 
-export const searchWord = async (sort_by_word, search, word, translation, techno_id, history) => {
+export const searchWord = async (sort_by_word, search, word, translation, techno_id) => {
   let dataWords={};  
   const response = await fetch(`https://hidden-plateau-07048.herokuapp.com/word/search`, {
         method: 'POST',

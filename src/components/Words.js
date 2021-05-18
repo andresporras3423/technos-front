@@ -12,20 +12,22 @@ function Words(props) {
     const [groupLen, setGroupLen] = useState(-1);
     const [nWord, setNWord] = useState('');
     const [nTranslation, setNTranslation] = useState('');
-    const [nTechnoId, setNTechnoId] = useState("");
+    const [nTechnoId, setNTechnoId] = useState(-1);
     const [nId, setNId] = useState(-1);
     const [message, setMessage] = useState("");
+    const [searchType, setSearchType] = useState(1);
+    const [sortType, setSortType] = useState(false);
 
     const clearForm = ()=>{
         setNWord('');
         setNTranslation('');
-        setNTechnoId("");
+        setNTechnoId(-1);
         setNId(-1);
     };
 
-    const loadWords= async ()=>{
+    const searchWords= async ()=>{
         debugger;
-        const dataWords = await searchWord(false, 1, '', '', -1);
+        const dataWords = await searchWord(sortType, parseInt(searchType), nWord, nTranslation, nTechnoId);
         setListWords(dataWords.list);
         groupWords();
     };
@@ -53,7 +55,7 @@ function Words(props) {
         }
         else{
             clearForm();
-            loadWords();
+            searchWords();
             setMessage("Word successfully saved!");
         }
     };
@@ -79,7 +81,7 @@ function Words(props) {
           <div className="formContainer">
               <label><strong>Technology</strong></label>
               <select value={nTechnoId} onChange={(e)=>setNTechnoId(e.target.value)}>
-                  <option disabled value="">select a techno</option>
+                  <option disabled value="-1">select a techno</option>
                   {
                       listTechnos.map((tech)=>(
                         <option value={tech.id} key={nanoid()}>{tech.techno_name}</option>
@@ -98,20 +100,21 @@ function Words(props) {
                   <pre dangerouslySetInnerHTML={{ __html: message }}></pre>
               </div>
               <div className="twoButtons">
-                  <button className="btn btn-dark">Search</button>
-                  <select>
-                  <option value="0">0</option>
-                  <option value="1">1</option>
-                  <option value="2">2</option>
+                  <button className="btn btn-dark" onClick={searchWords}>Search</button>
+                  <select onChange={(e)=>setSearchType(e.target.value)}>
+                  <option value="1">Contains</option>
+                  <option value="2">Starts</option>
+                  <option value="3">Ends</option>
+                  <option value="4">Equal</option>
               </select>
               </div>
               <div className="radioContainer">
                 <div>
-                  <input type="radio" id="saved" name="order" value="0" />
+                  <input type="radio" id="saved" name="order" checked={sortType===false} onChange={e => {}} onClick={(e)=>setSortType(false)} />
                   <label htmlFor="saved">Saved order</label>
                 </div>
                 <div>
-                  <input type="radio" id="alphabet" name="order" value="1" />
+                  <input type="radio" id="alphabet" name="order" checked={sortType===true} onChange={e => {}} onClick={(e)=>setSortType(true)} />
                   <label htmlFor="alphabet">Alphabetical order</label>
                 </div>
             </div>
