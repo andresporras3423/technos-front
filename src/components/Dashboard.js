@@ -1,4 +1,5 @@
-import {useState, useEffect} from 'react';
+import {useEffect} from 'react';
+import useState from 'react-usestateref';
 import Navbar from './Navbar';
 import Words from './Words';
 import Technologies from './Technologies';
@@ -9,14 +10,15 @@ import { useHistory } from "react-router-dom";
 
 function Dashboard() {
   const [selected, setSelected]=useState("0");
-  const [listWords, setListWords]=useState([]);
+  const [listWords, setListWords, refListWords]=useState([]);
   const history = useHistory();
 
     useEffect(() => {
       (
         async ()=>{
-          const list = await searchWord(true, 1, '', '', -1, history);
-          setListWords(list);
+          const data = await searchWord(false, 1, '', '', -1, history);
+          if(data.status===401) history.push('/login');
+          else setListWords(data.list);
         }
       )();
       }, []);
@@ -28,7 +30,7 @@ function Dashboard() {
      {(
        ()=>{
         if(selected==="0"){
-            return (<Words listWords={listWords} setListWords={setListWords} />);
+            return (<Words refListWords={refListWords} setListWords={setListWords} />);
         }
         else if(selected==="1"){
           return (<Technologies/>);

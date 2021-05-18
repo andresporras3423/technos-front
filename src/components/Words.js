@@ -1,9 +1,10 @@
 import {useState, useEffect} from 'react';
 import { nanoid } from 'nanoid';
 import {getTechno} from "./../data/technoData";
+import {createWord, searchWord} from "./../data/wordData";
 
 function Words(props) {
-    const {listWords, setListWords} = props;
+    const {refListWords, setListWords} = props;
     const [listTechnos, setListTechnos] = useState([]);
     const [technosHash, setTechnosHash] = useState({});
     const [groupedWords, setGroupedWords] = useState({});
@@ -12,25 +13,55 @@ function Words(props) {
     const [nWord, setNWord] = useState('');
     const [nTranslation, setNTranslation] = useState('');
     const [nTechnoId, setNTechnoId] = useState("");
+    const [nId, setNId] = useState(-1);
+    const [message, setMessage] = useState("");
 
     const clearForm = ()=>{
         setNWord('');
         setNTranslation('');
         setNTechnoId("");
+        setNId(-1);
+    };
+
+    const loadWords= async ()=>{
+        debugger;
+        const dataWords = await searchWord(false, 1, '', '', -1);
+        setListWords(dataWords.list);
+        groupWords();
+    };
+
+    const groupWords = ()=>{
+        const grouped = {};
+            let j=1;
+            for(let i=0; i<refListWords.current.length; i+=1){
+                if(grouped[j]===undefined) grouped[j]=[refListWords.current[i]];
+                else grouped[j].push(refListWords.current[i]);
+                if(i%10===9) j+=1;
+            }
+            setGroupLen(Object.keys(grouped).length);
+            setGroupedWords(grouped);
+    };
+
+    const saveForm = async ()=>{
+        const data = await createWord(nTechnoId, nWord, nTranslation);
+        if(data.status===409){
+            let nMessage = "";
+          Object.entries(data.errors).forEach((item)=>{
+            nMessage+=`${item[0]}: ${item[1]}</br>`;
+          });
+            setMessage(nMessage);
+        }
+        else{
+            clearForm();
+            loadWords();
+            setMessage("Word successfully saved!");
+        }
     };
 
     useEffect(() => {
         (
           async ()=>{
-            const grouped = {};
-            let j=1;
-            for(let i=0; i<listWords.length; i+=1){
-                if(grouped[j]===undefined) grouped[j]=[listWords[i]];
-                else grouped[j].push(listWords[i]);
-                if(i%10===9) j+=1;
-            }
-            setGroupLen(Object.keys(grouped).length);
-            setGroupedWords(grouped);
+            groupWords();
             let list = await getTechno(true);
             let listHash = {};
             list.forEach((item)=>{
@@ -60,8 +91,11 @@ function Words(props) {
               <label><strong>Meaning</strong></label>
               <textarea cols="20" rows="3" value={nTranslation} onChange={(e)=>setNTranslation(e.target.value)}></textarea>
               <div className="twoButtons">
-                  <button className="btn btn-dark">Save</button>
+                  <button className="btn btn-dark" onClick={saveForm}>Save</button>
                   <button className="btn btn-dark" onClick={clearForm}>clear</button>
+              </div>
+              <div>
+                  <pre dangerouslySetInnerHTML={{ __html: message }}></pre>
               </div>
               <div className="twoButtons">
                   <button className="btn btn-dark">Search</button>

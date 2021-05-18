@@ -1,14 +1,22 @@
 export const createWord = async (techno_id, word, translation) => {
+    let dataRequest = {};
     const response = await fetch(`https://hidden-plateau-07048.herokuapp.com/word/create`, {
         method: 'POST',
         headers: {
           Accept: 'application/json',
           'Content-Type': 'application/json',
+          'id': localStorage.getItem('id'),
+          'token': localStorage.getItem('token'),
         },
         body: JSON.stringify({techno_id: techno_id, word: word, translation: translation})
+      }).then((data)=>{
+        dataRequest.status = data.status;
+        return data.json();
+      }).then((data)=>{
+        dataRequest.errors= data;
       });
-      const data = await response;
-      return data;
+      await response;
+      return dataRequest;
 };
 
 export const updateWord = async (id, word, translation, techno_id) => {
@@ -17,6 +25,8 @@ export const updateWord = async (id, word, translation, techno_id) => {
         headers: {
           Accept: 'application/json',
           'Content-Type': 'application/json',
+          'id': localStorage.getItem('id'),
+          'token': localStorage.getItem('token'),
         },
         body: JSON.stringify({id: id, word: word, translation: translation, techno_id: techno_id})
       });
@@ -25,7 +35,7 @@ export const updateWord = async (id, word, translation, techno_id) => {
 };
 
 export const searchWord = async (sort_by_word, search, word, translation, techno_id, history) => {
-  let listWords=[];  
+  let dataWords={};  
   const response = await fetch(`https://hidden-plateau-07048.herokuapp.com/word/search`, {
         method: 'POST',
         headers: {
@@ -36,13 +46,13 @@ export const searchWord = async (sort_by_word, search, word, translation, techno
         },
         body: JSON.stringify({sort_by_word: sort_by_word, search: search, word: word, translation: translation, techno_id: techno_id} )
       }).then((data)=>{
-        if(data.status===401) history.push('/login');
+        dataWords.status = data.status;
         return data.json();
       }).then((words)=>{
-        listWords=words;
+        dataWords.list=words;
       });
       await response;
-      return listWords;
+      return dataWords;
 };
 
 export const deleteWord = async (id) => {
