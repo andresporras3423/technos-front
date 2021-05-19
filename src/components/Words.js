@@ -1,7 +1,8 @@
-import {useState, useEffect} from 'react';
+import {useEffect} from 'react';
+import useState from 'react-usestateref';
 import { nanoid } from 'nanoid';
 import {getTechno} from "./../data/technoData";
-import {createWord, deleteWord, searchWord} from "./../data/wordData";
+import {createWord, deleteWord, searchWord, updateWord} from "./../data/wordData";
 
 function Words(props) {
     const {refListWords, setListWords} = props;
@@ -10,10 +11,10 @@ function Words(props) {
     const [groupedWords, setGroupedWords] = useState({});
     const [currentPage, setCurrentPage] = useState(1);
     const [groupLen, setGroupLen] = useState(-1);
-    const [nWord, setNWord] = useState('');
-    const [nTranslation, setNTranslation] = useState('');
-    const [nTechnoId, setNTechnoId] = useState(-1);
-    const [nId, setNId] = useState(-1);
+    const [nWord, setNWord, refNWord] = useState('');
+    const [nTranslation, setNTranslation, refNTranslation] = useState('');
+    const [nTechnoId, setNTechnoId, refNTechnoId] = useState(-1);
+    const [nId, setNId, refNId] = useState(-1);
     const [message, setMessage] = useState("");
     const [searchType, setSearchType] = useState(1);
     const [sortType, setSortType] = useState(false);
@@ -29,7 +30,7 @@ function Words(props) {
         setformDisabled(true);
     };
 
-    const updateWord = (word)=>{
+    const editWord = (word)=>{
         valuesForm(word.word, word.translation, word.techno_id, word.id);
         setformDisabled(false);
     };
@@ -50,7 +51,7 @@ function Words(props) {
     }
 
     const searchWords= async ()=>{
-        const dataWords = await searchWord(sortType, parseInt(searchType), nWord, nTranslation, nTechnoId);
+        const dataWords = await searchWord(sortType, parseInt(searchType), refNWord.current, refNTranslation.current, refNTechnoId.current);
         setCurrentPage(1);
         setListWords(dataWords.list);
         groupWords();
@@ -69,7 +70,10 @@ function Words(props) {
     };
 
     const saveForm = async ()=>{
-        const data = await createWord(nTechnoId, nWord, nTranslation);
+        debugger;
+        let data={};
+        if(nId===-1) data = await createWord(nTechnoId, nWord, nTranslation);
+        else data = await updateWord(nId, nWord, nTranslation, nTechnoId);
         if(data.status===409){
             let nMessage = "";
           Object.entries(data.errors).forEach((item)=>{
@@ -117,7 +121,7 @@ function Words(props) {
               <label><strong>Meaning</strong></label>
               <textarea cols="20" rows="3" value={nTranslation} onChange={(e)=>setNTranslation(e.target.value)}  disabled={formDisabled}></textarea>
               <div className="twoButtons">
-                  <button className="btn btn-dark" onClick={saveForm}>Save</button>
+                  <button className="btn btn-dark" onClick={saveForm} disabled={formDisabled}>Save</button>
                   <button className="btn btn-dark" onClick={clearForm}>clear</button>
               </div>
               <div>
@@ -164,7 +168,7 @@ function Words(props) {
                                         <td>{technosHash[word.techno_id]}</td>
                                         <td>{word.word}</td>
                                         <td><i className="fas fa-search" onClick={async ()=> await lookWord(word)}></i></td>
-                                        <td><i className="fas fa-edit"></i></td>
+                                        <td><i className="fas fa-edit" onClick={async ()=> await editWord(word)}></i></td>
                                         <td><i className="fas fa-trash-alt" onClick={async ()=> await removeWord(word.id)}></i></td>
                                     </tr>
                                 )
