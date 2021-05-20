@@ -19,6 +19,7 @@ function Words(props) {
     const [searchType, setSearchType] = useState(1);
     const [sortType, setSortType] = useState(false);
     const [formDisabled, setformDisabled] = useState(false);
+    const [loadPage, setLoadPage]=useState(false);
 
     const clearForm = ()=>{
         setformDisabled(false);
@@ -99,11 +100,12 @@ function Words(props) {
             });
             setTechnosHash(listHash);
             setListTechnos(list);
+            setLoadPage(true);
           }
         )();
         }, []);
 
-    if (listTechnos.length===0) return (<></>);
+    if (loadPage===false) return (<></>);
     else return (
       <div className="wordDiv">
           <div className="formContainer">
@@ -162,7 +164,7 @@ function Words(props) {
                     </thead>
                     <tbody>
                         {
-                            groupedWords[currentPage].map(
+                           (groupLen===0 ? [] : groupedWords[currentPage]).map(
                                 (word)=>(
                                     <tr key={nanoid()}>
                                         <td>{technosHash[word.techno_id]}</td>
