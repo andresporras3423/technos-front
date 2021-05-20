@@ -4,8 +4,8 @@ import { nanoid } from 'nanoid';
 import {getTechno} from "./../data/technoData";
 import {createWord, deleteWord, searchWord, updateWord} from "./../data/wordData";
 
-function Words(props) {
-    const {refListWords, setListWords} = props;
+function Words() {
+  const [listWords, setListWords, refListWords]=useState([]);
     const [listTechnos, setListTechnos] = useState([]);
     const [technosHash, setTechnosHash] = useState({});
     const [groupedWords, setGroupedWords] = useState({});
@@ -92,6 +92,7 @@ function Words(props) {
     useEffect(() => {
         (
           async ()=>{
+            await searchWords();
             groupWords();
             let list = await getTechno(true);
             let listHash = {};

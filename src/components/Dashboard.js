@@ -5,32 +5,35 @@ import Words from './Words';
 import Technologies from './Technologies';
 import Test from './Test';
 import History from './History';
-import {searchWord} from "./../data/wordData";
+import {indexUser} from './../data/userData';
 import { useHistory } from "react-router-dom";
 
 function Dashboard() {
   const [selected, setSelected]=useState("0");
-  const [listWords, setListWords, refListWords]=useState([]);
+  const [logged, setLogged]=useState(false);
   const history = useHistory();
 
     useEffect(() => {
       (
         async ()=>{
-          const data = await searchWord(false, 1, '', '', -1, history);
-          if(data.status===401) history.push('/login');
-          else setListWords(data.list);
+          const data = await indexUser();
+          if(data.status!==200) history.push('/login');
+          else setLogged(true);
+          // const data = await searchWord(false, 1, '', '', -1, history);
+          // if(data.status===401) history.push('/login');
+          // else setListWords(data.list);
         }
       )();
       }, []);
 
-  if (listWords.length===0) return (<></>);
+  if (logged===false) return (<></>);
   return (
     <div>
      <Navbar setSelected={setSelected}/>
      {(
        ()=>{
         if(selected==="0"){
-            return (<Words refListWords={refListWords} setListWords={setListWords} />);
+            return (<Words />);
         }
         else if(selected==="1"){
           return (<Technologies/>);
