@@ -153,7 +153,7 @@ function Technologies() {
                       </thead>
                       <tbody>
                           {
-                              (groupLen===0 ? [] : groupedTechnos[currentPage]).map(
+                              (groupedTechnos[currentPage] ?? []).map(
                                   (techno)=>(
                                       <tr key={nanoid()}>
                                           <td>{techno.techno_name}</td>

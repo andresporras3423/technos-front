@@ -77,15 +77,19 @@ export const deleteWord = async (id) => {
 };
 
 export const nextQuestionWord = async (techno_id) => {
-    const response = await fetch(`https://hidden-plateau-07048.herokuapp.com/word/next_question?techno_id=${techno_id}`, {
-        method: 'GET',
+    const response = await fetch(`https://hidden-plateau-07048.herokuapp.com/word/next_question`, {
+        method: 'POST',
         headers: {
           Accept: 'application/json',
           'Content-Type': 'application/json',
-        }
-      });
-      const data = await response;
-      return data;
+          'id': localStorage.getItem('id'),
+          'token': localStorage.getItem('token'),
+        },
+        body: JSON.stringify({techno_id: techno_id})
+    });
+    debugger;
+    const data = await response.json();
+    return data;
 };
 
   export default {createWord, updateWord, searchWord, deleteWord, nextQuestionWord}
