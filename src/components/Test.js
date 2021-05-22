@@ -15,6 +15,7 @@ function Test() {
     const [corrects, setCorrects] = useState(0);
 
     const assignQuestions = async ()=>{
+        setOptionSelected(-1);
         setSolution(parseInt(Math.random()*4));
         const q = await nextQuestionWord(parseInt(refNTechnoId.current));
         setOptions(q);
@@ -23,6 +24,8 @@ function Test() {
     const updateTestTechno = async (nTest)=>{
         setNTechnoId(nTest);
         await assignQuestions();
+        setNumberCurrentQuestion(1);
+        setCorrects(0);
     };
 
     const updateOptionSelected = (index)=>{
@@ -31,7 +34,6 @@ function Test() {
     };
 
     const nextQuestion = ()=>{
-        setOptionSelected(-1);
         setNumberCurrentQuestion(numberCurrentQuestion+1);
         assignQuestions();
     }
@@ -69,7 +71,7 @@ function Test() {
               </div>
               <div>
                   <h4>How many?:</h4>
-                  <input type="number" className="w-100" min="2" value={numberQuestions} onChange={(e)=>setNumberQuestions(e.target.value)}/>
+                  <input type="number" className="w-100" min={`${numberCurrentQuestion}`} value={numberQuestions} onChange={(e)=>setNumberQuestions(e.target.value)}/>
               </div>
           </div>
           <h4>
