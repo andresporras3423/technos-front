@@ -12,6 +12,7 @@ function Test() {
     const [solution, setSolution] = useState(0);
     const [numberCurrentQuestion, setNumberCurrentQuestion] = useState(1);
     const [optionSelected, setOptionSelected, refOptionSelected] = useState(-1);
+    const [corrects, setCorrects] = useState(0);
 
     const assignQuestions = async ()=>{
         setSolution(parseInt(Math.random()*4));
@@ -23,6 +24,17 @@ function Test() {
         setNTechnoId(nTest);
         await assignQuestions();
     };
+
+    const updateOptionSelected = (index)=>{
+        setOptionSelected(index);
+        if(index===solution) setCorrects(corrects+1);
+    };
+
+    const nextQuestion = ()=>{
+        setOptionSelected(-1);
+        setNumberCurrentQuestion(numberCurrentQuestion+1);
+        assignQuestions();
+    }
 
     const colorOption = (index)=>{
         if(optionSelected===-1) return '';
@@ -68,16 +80,16 @@ function Test() {
           </h4>
           <div>
               {(options ?? []).map((item, index)=>(
-                      <div className={`itemTest ${colorOption(index)}`} key={nanoid()}>
-                          <input name="opts" type="radio" value={index} onClick={()=>setOptionSelected(index)} />
+                      <div className={`itemTest ${colorOption(index)}`}  key={nanoid()}>
+                          <input name="opts" type="radio" value={index} disabled={optionSelected!==-1} onClick={()=>updateOptionSelected(index)} />
                           <textarea value={item.translation} row="10" col="75" disabled></textarea>
                       </div>
                   )
               )}
           </div>
           <div className="topTest">
-              <h5 className="w-100">{numberCurrentQuestion}/{numberQuestions}</h5>
-              <button className="w-100 btn btn-dark">next</button>
+              <h5 className="w-100">{corrects}/{numberCurrentQuestion}</h5>
+              <button className="w-100 btn btn-dark" onClick={nextQuestion}>next</button>
           </div>
       </div>
     )

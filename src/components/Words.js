@@ -71,7 +71,6 @@ function Words() {
     };
 
     const saveForm = async ()=>{
-        debugger;
         let data={};
         if(nId===-1) data = await createWord(nTechnoId, nWord, nTranslation);
         else data = await updateWord(nId, nWord, nTranslation, nTechnoId);
