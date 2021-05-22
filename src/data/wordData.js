@@ -20,8 +20,7 @@ export const createWord = async (techno_id, word, translation) => {
 };
 
 export const updateWord = async (id, word, translation, techno_id) => {
-  let dataRequest = {};  
-  debugger;
+  let dataRequest = {};
   const response = await fetch(`https://hidden-plateau-07048.herokuapp.com/word/update`, {
         method: 'PUT',
         headers: {
@@ -87,7 +86,6 @@ export const nextQuestionWord = async (techno_id) => {
         },
         body: JSON.stringify({techno_id: techno_id})
     });
-    debugger;
     const data = await response.json();
     return data;
 };
