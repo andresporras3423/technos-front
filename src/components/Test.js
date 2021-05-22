@@ -82,7 +82,7 @@ function Test() {
               {(options ?? []).map((item, index)=>(
                       <div className={`itemTest ${colorOption(index)}`}  key={nanoid()}>
                           <input name="opts" type="radio" value={index} disabled={optionSelected!==-1} onClick={()=>updateOptionSelected(index)} />
-                          <textarea value={item.translation} row="10" col="75" disabled></textarea>
+                          <textarea value={item.translation} rows="5" disabled></textarea>
                       </div>
                   )
               )}

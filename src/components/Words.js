@@ -121,9 +121,6 @@ function Words() {
               <label><strong>Word</strong></label>
               <input value={nWord} onChange={(e)=>setNWord(e.target.value)}  disabled={formDisabled}></input>
               <label><strong>Meaning</strong></label>
-              {/* <textarea style={{whiteSpace: "pre-wrap"}} cols="20" rows="3" onChange={(e)=>setNTranslation(e.target.value)}  disabled={formDisabled}>{nTranslation}</textarea> */}
-              {/* <div style={{whiteSpace: "pre-wrap"}}>{nTranslation}</div> */}
-              {/* <pre contenteditable={formDisabled} dangerouslySetInnerHTML={{ __html: nTranslation.split("\\n").join('<br/>') }}></pre> */}
               <textarea style={{ whiteSpace: 'pre-wrap' }} style={{whiteSpace: "pre-wrap"}} value={nTranslation} cols="20" rows="3" onChange={(e)=>setNTranslation(e.target.value)}  disabled={formDisabled}>
   </textarea>
               <div className="twoButtons">
