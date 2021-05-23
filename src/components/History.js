@@ -1,18 +1,32 @@
+import {useEffect} from 'react';
 import { nanoid } from 'nanoid';
+import { getTest } from './../data/testData';
+import useState from 'react-usestateref';
 
 function History() {
-    const listTests = [
-        {"date": "12/31/2020", "correct": "5", "total": "10"},
-        {"date": "12/31/2020", "correct": "2", "total": "10"},
-        {"date": "12/31/2020", "correct": "6", "total": "10"},
-        {"date": "12/31/2020", "correct": "7", "total": "10"},
-        {"date": "12/31/2020", "correct": "8", "total": "10"},
-        {"date": "12/31/2020", "correct": "5", "total": "10"},
-        {"date": "12/31/2020", "correct": "5", "total": "10"},
-        {"date": "12/31/2020", "correct": "5", "total": "10"},
-        {"date": "12/31/2020", "correct": "9", "total": "10"},
-        {"date": "12/31/2020", "correct": "3", "total": "10"},
-    ];
+    const [currentPage, setCurrentPage, refCurrentPage] = useState(1);
+    const [groupTests, setGroupTests, refGroupTests] = useState({});
+    const [groupLen, setGroupLen, refGroupLen] = useState(0);
+    const [totalTtests, setTotalTests, refTtotalTests] = useState(0);
+
+    useEffect(() => {
+        (
+          async ()=>{
+            debugger;
+            const list = await getTest();
+            setTotalTests(list.length);
+            const grouped = {};
+            let j=1;
+            for(let i=0; i<list.length; i+=1){
+                if(grouped[j]===undefined) grouped[j]=[list[i]];
+                else grouped[j].push(list[i]);
+                if(i%10===9) j+=1;
+            }
+            setGroupLen(Object.keys(grouped).length);
+            setGroupTests(grouped);
+          }
+        )();
+        }, []);
     return (
       <div className="testContainer">
           <div className="tableContainer">
@@ -35,7 +49,7 @@ function History() {
                     </thead>
                     <tbody>
                         {
-                            listTests.map(
+                            (refGroupTests.current[refCurrentPage.current] ?? []).map(
                                 (test)=>(
                                     <tr style={{backgroundColor: test.correct/test.total <= 0.5 ? `rgb(255,${parseInt(255*(test.correct/test.total))},0)`: `rgb(${parseInt(255-(255*(test.correct/test.total)))}, 255,0)`}} key={nanoid()}>
                                         <td>{test.date}</td>
@@ -48,20 +62,20 @@ function History() {
                     </tbody>
                 </table>
                 <div className="fiveColumns">
-                    <button className="btn btn-dark">
+                    <button className="btn btn-dark" onClick={()=>setCurrentPage(1)}>
                         <i className="fas fa-fast-backward"></i>
                         </button>
-                        <button className="btn btn-dark">
+                        <button className="btn btn-dark" onClick={()=>{if(refCurrentPage.current>1) setCurrentPage(refCurrentPage.current-1)}}>
                         <i className="fas fa-step-backward"></i>
                         </button>
                         <span>
-                            <div>6/10</div>
-                            <div>10 tests</div>
+                            <div>{refCurrentPage.current}/{refGroupLen.current}</div>
+                            <div>{refTtotalTests.current} tests</div>
                             </span>
-                        <button className="btn btn-dark">
+                        <button className="btn btn-dark" onClick={()=>{if(refCurrentPage.current<refGroupLen.current) setCurrentPage(refCurrentPage.current+1)}}>
                         <i className="fas fa-step-forward"></i>
                         </button>
-                        <button className="btn btn-dark">
+                        <button className="btn btn-dark" onClick={()=>setCurrentPage(refGroupLen.current)}>
                         <i className="fas fa-fast-forward"></i>
                         </button>
                     </div>

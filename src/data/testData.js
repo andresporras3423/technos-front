@@ -23,7 +23,7 @@ export const getTest = async () => {
           'token': localStorage.getItem('token'),
         }
       });
-      const data = await response;
+      const data = await response.json();
       return data;
 };
 
