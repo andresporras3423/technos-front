@@ -8,20 +8,27 @@ function History() {
     const [groupTests, setGroupTests, refGroupTests] = useState({});
     const [groupLen, setGroupLen, refGroupLen] = useState(0);
     const [totalTtests, setTotalTests, refTtotalTests] = useState(0);
+    const [totalCorrects, setTotalCorrects, refTotalCorrects] = useState(0);
+    const [totalQuestions, setTotalQuestions, refTotalQuestions] = useState(0);
 
     useEffect(() => {
         (
           async ()=>{
-            debugger;
             const list = await getTest();
             setTotalTests(list.length);
             const grouped = {};
+            let total=0;
+            let correct=0;
             let j=1;
             for(let i=0; i<list.length; i+=1){
+                correct+=list[i].correct;
+                total+=list[i].total;
                 if(grouped[j]===undefined) grouped[j]=[list[i]];
                 else grouped[j].push(list[i]);
                 if(i%10===9) j+=1;
             }
+            setTotalCorrects(correct);
+            setTotalQuestions(total);
             setGroupLen(Object.keys(grouped).length);
             setGroupTests(grouped);
           }
@@ -34,8 +41,8 @@ function History() {
               <h5>
               GLOBAL SCORE:
               </h5>
-              <h5 style={{backgroundColor: 17/30 <= 0.5 ? `rgb(255,${parseInt(255*(17/30))},0)`: `rgb(${parseInt(255-(255*(17/30)))}, 255,0)`}}>
-              17 / 30 ( 56.67 %)
+              <h5 style={{backgroundColor: refTotalCorrects.current/refTotalQuestions.current <= 0.5 ? `rgb(255,${parseInt(255*(17/30))},0)`: `rgb(${parseInt(255-(255*(17/30)))}, 255,0)`}}>
+              {refTotalCorrects.current} / {refTotalQuestions.current} ( {refTotalCorrects.current*100/refTotalQuestions.current} %)
               </h5>
           </div>
             <div>
