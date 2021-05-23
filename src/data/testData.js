@@ -4,6 +4,8 @@ export const createTest = async (correct, total) => {
         headers: {
           Accept: 'application/json',
           'Content-Type': 'application/json',
+          'id': localStorage.getItem('id'),
+          'token': localStorage.getItem('token'),
         },
         body: JSON.stringify({correct: correct, total: total})
       });
@@ -17,6 +19,8 @@ export const getTest = async () => {
         headers: {
           Accept: 'application/json',
           'Content-Type': 'application/json',
+          'id': localStorage.getItem('id'),
+          'token': localStorage.getItem('token'),
         }
       });
       const data = await response;
