@@ -20,6 +20,7 @@ function Words() {
     const [sortType, setSortType] = useState(false);
     const [formDisabled, setformDisabled] = useState(false);
     const [loadPage, setLoadPage]=useState(false);
+    const [totalWords, setTotalWords, refTotalWords] = useState(0);
 
     const clearForm = ()=>{
         setformDisabled(false);
@@ -61,6 +62,7 @@ function Words() {
     const groupWords = ()=>{
         const grouped = {};
             let j=1;
+            setTotalWords(refListWords.current.length);
             for(let i=0; i<refListWords.current.length; i+=1){
                 if(grouped[j]===undefined) grouped[j]=[refListWords.current[i]];
                 else grouped[j].push(refListWords.current[i]);
@@ -186,7 +188,10 @@ function Words() {
                     <button className="btn btn-dark" onClick={()=>{if(currentPage>1) setCurrentPage(currentPage-1)}}>
                         <i className="fas fa-step-backward"></i>
                     </button>
-                    <span>{currentPage}/{groupLen}</span>
+                    <span>
+                        <div>{currentPage}/{groupLen}</div>
+                        <div>{refTotalWords.current} words</div>
+                    </span>
                     <button className="btn btn-dark" onClick={()=>{if(currentPage<groupLen) setCurrentPage(currentPage+1)}}>
                         <i className="fas fa-step-forward"></i>
                     </button>

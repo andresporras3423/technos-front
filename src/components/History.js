@@ -9,7 +9,7 @@ function History() {
     const [groupLen, setGroupLen, refGroupLen] = useState(0);
     const [totalTtests, setTotalTests, refTtotalTests] = useState(0);
     const [totalCorrects, setTotalCorrects, refTotalCorrects] = useState(0);
-    const [totalQuestions, setTotalQuestions, refTotalQuestions] = useState(0);
+    const [totalQuestions, setTotalQuestions, refTotalQuestions] = useState(1);
 
     useEffect(() => {
         (
@@ -59,7 +59,7 @@ function History() {
                             (refGroupTests.current[refCurrentPage.current] ?? []).map(
                                 (test)=>(
                                     <tr style={{backgroundColor: test.correct/test.total <= 0.5 ? `rgb(255,${parseInt(255*(test.correct/test.total))},0)`: `rgb(${parseInt(255-(255*(test.correct/test.total)))}, 255,0)`}} key={nanoid()}>
-                                        <td>{test.date}</td>
+                                        <td>{test.created_at}</td>
                                         <td>{test.correct}</td>
                                         <td>{test.total}</td>
                                     </tr>

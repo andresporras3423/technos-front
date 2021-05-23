@@ -16,6 +16,7 @@ function Technologies() {
     const [sortType, setSortType] = useState(false);
     const [formDisabled, setformDisabled] = useState(false);
     const [loadPage, setLoadPage]=useState(false);
+    const [totalTechnos, setTotalTechnos, refTotalTechnos] = useState(0);
 
     const clearForm = ()=>{
         setformDisabled(false);
@@ -56,6 +57,7 @@ function Technologies() {
     const groupTechnos = ()=>{
         const grouped = {};
             let j=1;
+            setTotalTechnos(refListTechnos.current.length);
             for(let i=0; i<refListTechnos.current.length; i+=1){
                 if(grouped[j]===undefined) grouped[j]=[refListTechnos.current[i]];
                 else grouped[j].push(refListTechnos.current[i]);
@@ -173,7 +175,10 @@ function Technologies() {
                       <button className="btn btn-dark" onClick={()=>{if(currentPage>1) setCurrentPage(currentPage-1)}}>
                           <i className="fas fa-step-backward"></i>
                       </button>
-                      <span>{currentPage}/{groupLen}</span>
+                      <span>
+                          <div>{currentPage}/{groupLen}</div>
+                          <div>{refTotalTechnos.current} technos</div>
+                      </span>
                       <button className="btn btn-dark" onClick={()=>{if(currentPage<groupLen) setCurrentPage(currentPage+1)}}>
                           <i className="fas fa-step-forward"></i>
                       </button>
