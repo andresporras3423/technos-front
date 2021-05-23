@@ -9,11 +9,11 @@ function Test() {
     const [listTechnos, setListTechnos] = useState([]);
     const [nTechnoId, setNTechnoId, refNTechnoId] = useState(-1);
     const [options, setOptions] = useState([]);
-    const [numberQuestions, setNumberQuestions] = useState(10);
-    const [solution, setSolution] = useState(0);
+    const [numberQuestions, setNumberQuestions, refNumberQuestions] = useState(10);
+    const [solution, setSolution, refSolution] = useState(0);
     const [numberCurrentQuestion, setNumberCurrentQuestion, refNumberCurrentQuestion] = useState(1);
     const [optionSelected, setOptionSelected, refOptionSelected] = useState(-1);
-    const [corrects, setCorrects] = useState(0);
+    const [corrects, setCorrects, refCorrects] = useState(0);
 
     const assignQuestions = async ()=>{
         setOptionSelected(-1);
@@ -31,14 +31,14 @@ function Test() {
 
     const updateOptionSelected = (index)=>{
         setOptionSelected(index);
-        if(index===solution) setCorrects(corrects+1);
+        if(index===refSolution.current) setCorrects(refCorrects.current+1);
     };
 
     const nextQuestion = async ()=>{
         debugger;
-        if(refNumberCurrentQuestion.current===parseInt(numberQuestions)){
-            alert(`Your final score was ${corrects}/${numberQuestions}`);
-            await createTest(corrects, parseInt(numberQuestions));
+        if(refNumberCurrentQuestion.current===parseInt(refNumberQuestions.current)){
+            alert(`Your final score was ${refCorrects.current}/${refNumberQuestions.current}`);
+            await createTest(refCorrects.current, parseInt(refNumberQuestions.current));
             await updateTestTechno(nTechnoId);
         }
         else{
@@ -49,8 +49,8 @@ function Test() {
 
     const colorOption = (index)=>{
         if(refOptionSelected.current===-1) return '';
-        else if(refOptionSelected.current===index && index!==solution) return 'bg-danger';
-        else if(index===solution) return 'bg-success';
+        else if(refOptionSelected.current===index && index!==refSolution.current) return 'bg-danger';
+        else if(index===refSolution.current) return 'bg-success';
         else return '';
     };
 
@@ -83,14 +83,14 @@ function Test() {
               </div>
               <div>
                   <h4>How many?:</h4>
-                  <input type="number" className="w-100" min={`${refNumberCurrentQuestion.current}`} value={numberQuestions} onChange={(e)=>setNumberQuestions(e.target.value)}/>
+                  <input type="number" className="w-100" min={`${refNumberCurrentQuestion.current}`} value={refNumberQuestions.current} onChange={(e)=>setNumberQuestions(e.target.value)}/>
               </div>
           </div>
           <h4>
-          TECHNOLOGY: {(options[solution] ?? {'techno_name':''}).techno_name}
+          TECHNOLOGY: {(options[refSolution.current] ?? {'techno_name':''}).techno_name}
           </h4>
           <h4>
-          WORD: {(options[solution] ?? {'word':''}).word}
+          WORD: {(options[refSolution.current] ?? {'word':''}).word}
           </h4>
           <div>
               {(options ?? []).map((item, index)=>(
@@ -102,8 +102,8 @@ function Test() {
               )}
           </div>
           <div className="topTest">
-              <h5 className="w-100">{corrects}/{refNumberCurrentQuestion.current}</h5>
-              <button className="w-100 btn btn-dark" onClick={nextQuestion}>next</button>
+              <h5 className="w-100">{refCorrects.current}/{refNumberCurrentQuestion.current}</h5>
+              <button className="w-100 btn btn-dark" onClick={nextQuestion} disabled={refOptionSelected.current===-1}>next</button>
           </div>
       </div>
     )
