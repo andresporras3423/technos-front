@@ -9,7 +9,7 @@ function Test() {
     const [listTechnos, setListTechnos] = useState([]);
     const [nTechnoId, setNTechnoId, refNTechnoId] = useState(-1);
     const [options, setOptions] = useState([]);
-    const [numberQuestions, setNumberQuestions, refNumberQuestions] = useState(10);
+    const [numberQuestions, setNumberQuestions, refNumberQuestions] = useState(8);
     const [solution, setSolution, refSolution] = useState(0);
     const [numberCurrentQuestion, setNumberCurrentQuestion, refNumberCurrentQuestion] = useState(1);
     const [optionSelected, setOptionSelected, refOptionSelected] = useState(-1);
