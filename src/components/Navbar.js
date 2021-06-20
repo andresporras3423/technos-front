@@ -21,6 +21,7 @@ function Navbar(props) {
       <span onClick={()=>setSelected("1")}>Technologies</span>
       <span onClick={()=>setSelected("2")}>Tests</span>
       <span onClick={()=>setSelected("3")}>History</span>
+      <span onClick={()=>setSelected("4")}>Practice</span>
       <span onClick={()=>logout()}>Exit</span>
     </nav>
     <select className="nav-select" onChange={updateSelected}>

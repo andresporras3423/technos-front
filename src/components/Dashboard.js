@@ -4,6 +4,7 @@ import Navbar from './Navbar';
 import Words from './Words';
 import Technologies from './Technologies';
 import Test from './Test';
+import Practice from './Practice';
 import History from './History';
 import {indexUser} from './../data/userData';
 import { useHistory } from "react-router-dom";
@@ -19,9 +20,6 @@ function Dashboard() {
           const data = await indexUser();
           if(data.status!==200) history.push('/login');
           else setLogged(true);
-          // const data = await searchWord(false, 1, '', '', -1, history);
-          // if(data.status===401) history.push('/login');
-          // else setListWords(data.list);
         }
       )();
       }, []);
@@ -43,6 +41,9 @@ function Dashboard() {
         }
         else if(selected==="3"){
           return (<History/>);
+        }
+        else if(selected==="4"){
+          return (<Practice/>);
         }
       }
      )()}
