@@ -90,4 +90,19 @@ export const nextQuestionWord = async (techno_id) => {
     return data;
 };
 
-  export default {createWord, updateWord, searchWord, deleteWord, nextQuestionWord}
+export const nextPracticeWord = async (techno_id) => {
+  const response = await fetch(`https://hidden-plateau-07048.herokuapp.com/word/next_practice`, {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+        'id': localStorage.getItem('id'),
+        'token': localStorage.getItem('token'),
+      },
+      body: JSON.stringify({techno_id: techno_id})
+  });
+  const data = await response.json();
+  return data;
+};
+
+  export default {createWord, updateWord, searchWord, deleteWord, nextQuestionWord, nextPracticeWord}
