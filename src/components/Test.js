@@ -9,7 +9,7 @@ function Test() {
     const [listTechnos, setListTechnos] = useState([]);
     const [nTechnoId, setNTechnoId, refNTechnoId] = useState(-1);
     const [options, setOptions] = useState([]);
-    const [numberQuestions, setNumberQuestions, refNumberQuestions] = useState(8);
+    const [numberQuestions, setNumberQuestions, refNumberQuestions] = useState(100);
     const [solution, setSolution, refSolution] = useState(0);
     const [numberCurrentQuestion, setNumberCurrentQuestion, refNumberCurrentQuestion] = useState(1);
     const [optionSelected, setOptionSelected, refOptionSelected] = useState(-1);
@@ -96,7 +96,7 @@ function Test() {
               {(options ?? []).map((item, index)=>(
                       <div className={`itemTest ${colorOption(index)}`}  key={nanoid()}>
                           <input name="opts" type="radio" value={index} disabled={refOptionSelected.current!==-1} onClick={()=>updateOptionSelected(index)} />
-                          <textarea value={item.translation} rows="5" disabled></textarea>
+                          <textarea value={item.translation} rows="3" disabled></textarea>
                       </div>
                   )
               )}

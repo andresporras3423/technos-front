@@ -24,7 +24,7 @@ function Words() {
 
     const clearForm = ()=>{
         setformDisabled(false);
-        valuesForm('', '', -1, -1);
+        valuesForm('', '', listTechnos.length===1 ? listTechnos[0].id : -1, -1);
     };
 
     const lookWord = (word)=>{
@@ -102,6 +102,7 @@ function Words() {
             });
             setTechnosHash(listHash);
             setListTechnos(list);
+            if(list.length===1) setNTechnoId(list[0].id);
             setLoadPage(true);
           }
         )();
@@ -123,7 +124,7 @@ function Words() {
               <label><strong>Word</strong></label>
               <input value={nWord} onChange={(e)=>setNWord(e.target.value)}  disabled={formDisabled}></input>
               <label><strong>Meaning</strong></label>
-              <textarea style={{ whiteSpace: 'pre-wrap' }} style={{whiteSpace: "pre-wrap"}} value={nTranslation} cols="20" rows="3" onChange={(e)=>setNTranslation(e.target.value)}  disabled={formDisabled}>
+              <textarea style={{ whiteSpace: 'pre-wrap' }} value={nTranslation} cols="20" rows="3" onChange={(e)=>setNTranslation(e.target.value)}  disabled={formDisabled}>
   </textarea>
               <div className="twoButtons">
                   <button className="btn btn-dark" onClick={saveForm} disabled={formDisabled}>Save</button>

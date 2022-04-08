@@ -1,6 +1,6 @@
 import './../App.css';
 import {
-  Route, Switch,
+  Route, Switch, HashRouter
 } from 'react-router-dom';
 import Login from './Login';
 import Dashboard from './Dashboard';
@@ -8,7 +8,8 @@ import Dashboard from './Dashboard';
 function App() {
   
   return (
-    <Switch>
+    <HashRouter>
+      <Switch>
       <Route exact path="/login">
         <Login option="login" />
       </Route>
@@ -19,6 +20,7 @@ function App() {
         <Dashboard />
       </Route>
     </Switch>
+    </HashRouter>
   );
 }
 
