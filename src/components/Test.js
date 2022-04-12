@@ -8,18 +8,22 @@ import { nanoid } from 'nanoid';
 function Test() {
     const [listTechnos, setListTechnos] = useState([]);
     const [nTechnoId, setNTechnoId, refNTechnoId] = useState(-1);
-    const [options, setOptions] = useState([]);
+    const [options, setOptions, refOptions] = useState([]);
     const [numberQuestions, setNumberQuestions, refNumberQuestions] = useState(100);
     const [solution, setSolution, refSolution] = useState(0);
+    const [wordSolution, setWordSolution, refWordSolution] = useState("");
+    const [wordTechno, setWordTechno, refWordTechno] = useState("");
     const [numberCurrentQuestion, setNumberCurrentQuestion, refNumberCurrentQuestion] = useState(1);
     const [optionSelected, setOptionSelected, refOptionSelected] = useState(-1);
     const [corrects, setCorrects, refCorrects] = useState(0);
 
     const assignQuestions = async ()=>{
         setOptionSelected(-1);
-        setSolution(parseInt(Math.random()*4));
         const q = await nextQuestionWord(parseInt(refNTechnoId.current));
         setOptions(q);
+        setSolution(parseInt(Math.random()*4));
+        setWordSolution(refOptions.current[refSolution.current].word);
+        setWordTechno(refOptions.current[refSolution.current].techno_name);
     }
 
     const updateTestTechno = async (nTest)=>{
@@ -35,7 +39,6 @@ function Test() {
     };
 
     const nextQuestion = async ()=>{
-        debugger;
         if(refNumberCurrentQuestion.current===parseInt(refNumberQuestions.current)){
             alert(`Your final score was ${refCorrects.current}/${refNumberQuestions.current}`);
             await createTest(refCorrects.current, parseInt(refNumberQuestions.current));
@@ -87,10 +90,10 @@ function Test() {
               </div>
           </div>
           <h4>
-          TECHNOLOGY: {(options[refSolution.current] ?? {'techno_name':''}).techno_name}
+          TECHNOLOGY: {refWordTechno.current}
           </h4>
           <h4>
-          WORD: {(options[refSolution.current] ?? {'word':''}).word}
+          WORD: {refWordSolution.current}
           </h4>
           <div>
               {(options ?? []).map((item, index)=>(
