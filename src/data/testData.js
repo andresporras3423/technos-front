@@ -1,5 +1,7 @@
+import { url }  from './global';
+
 export const createTest = async (correct, total) => {
-    const response = await fetch(`https://hidden-plateau-07048.herokuapp.com/test/create`, {
+    const response = await fetch(`${url}tests`, {
         method: 'POST',
         headers: {
           Accept: 'application/json',
@@ -14,7 +16,7 @@ export const createTest = async (correct, total) => {
 };
 
 export const getTest = async () => {
-    const response = await fetch(`https://hidden-plateau-07048.herokuapp.com/test/get`, {
+    const response = await fetch(`${url}tests`, {
         method: 'GET',
         headers: {
           Accept: 'application/json',

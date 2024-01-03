@@ -110,7 +110,7 @@ function Technologies() {
                   <label htmlFor="saved">Active</label>
                   </div>
                   <div>
-                  <input type="radio" id="status2" name="status" checked={nStatus===false} onChange={e => {}} onClick={(e)=>setNStatus(false)} />
+                  <input type="radio" id="status2" name="status" checked={nStatus===false} onChange={e => {}} onClick={(e)=>setNStatus(false)} disabled={formDisabled} />
                   <label htmlFor="alphabet">Inactive</label>
                   </div>
                 </div>

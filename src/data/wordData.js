@@ -1,6 +1,8 @@
+import { url }  from './global';
+
 export const createWord = async (techno_id, word, translation) => {
     let dataRequest = {};
-    const response = await fetch(`https://hidden-plateau-07048.herokuapp.com/word/create`, {
+    const response = await fetch(`${url}words`, {
         method: 'POST',
         headers: {
           Accept: 'application/json',
@@ -21,7 +23,7 @@ export const createWord = async (techno_id, word, translation) => {
 
 export const updateWord = async (id, word, translation, techno_id) => {
   let dataRequest = {};
-  const response = await fetch(`https://hidden-plateau-07048.herokuapp.com/word/update`, {
+  const response = await fetch(`${url}words`, {
         method: 'PUT',
         headers: {
           Accept: 'application/json',
@@ -42,7 +44,7 @@ export const updateWord = async (id, word, translation, techno_id) => {
 
 export const searchWord = async (sort_by_word, search, word, translation, techno_id) => {
   let dataWords={};  
-  const response = await fetch(`https://hidden-plateau-07048.herokuapp.com/word/search`, {
+  const response = await fetch(`${url}words/search?sort_by_word=${sort_by_word}&search=${search}`, {
         method: 'POST',
         headers: {
           Accept: 'application/json',
@@ -50,7 +52,7 @@ export const searchWord = async (sort_by_word, search, word, translation, techno
           'id': localStorage.getItem('id'),
           'token': localStorage.getItem('token'),
         },
-        body: JSON.stringify({sort_by_word: sort_by_word, search: search, word: word, translation: translation, techno_id: techno_id} )
+        body: JSON.stringify({word: word, translation: translation, techno_id: techno_id+""} )
       }).then((data)=>{
         dataWords.status = data.status;
         return data.json();
@@ -62,7 +64,7 @@ export const searchWord = async (sort_by_word, search, word, translation, techno
 };
 
 export const deleteWord = async (id) => {
-    const response = await fetch(`https://hidden-plateau-07048.herokuapp.com/word/delete?id=${id}`, {
+    const response = await fetch(`${url}words?id=${id}`, {
         method: 'DELETE',
         headers: {
           Accept: 'application/json',
@@ -76,30 +78,28 @@ export const deleteWord = async (id) => {
 };
 
 export const nextQuestionWord = async (techno_id) => {
-    const response = await fetch(`https://hidden-plateau-07048.herokuapp.com/word/next_question`, {
-        method: 'POST',
+    const response = await fetch(`${url}words/next_question?techno_id=${techno_id}`, {
+        method: 'GET',
         headers: {
           Accept: 'application/json',
           'Content-Type': 'application/json',
           'id': localStorage.getItem('id'),
           'token': localStorage.getItem('token'),
-        },
-        body: JSON.stringify({techno_id: techno_id})
+        }
     });
     const data = await response.json();
     return data;
 };
 
 export const nextPracticeWord = async (techno_id) => {
-  const response = await fetch(`https://hidden-plateau-07048.herokuapp.com/word/next_practice`, {
-      method: 'POST',
+  const response = await fetch(`${url}words/next_practice?techno_id=${techno_id}`, {
+      method: 'GET',
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json',
         'id': localStorage.getItem('id'),
         'token': localStorage.getItem('token'),
-      },
-      body: JSON.stringify({techno_id: techno_id})
+      }
   });
   const data = await response.json();
   return data;

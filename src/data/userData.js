@@ -1,6 +1,8 @@
+import { url }  from './global';
+
 export const createUser = async (username, email, password, password_confirmation) => {
   const listData=new Object();  
-  const response = await fetch(`https://hidden-plateau-07048.herokuapp.com/user/create`, {
+  const response = await fetch(`${url}users`, {
         method: 'POST',
         headers: {
           Accept: 'application/json',
@@ -18,7 +20,7 @@ export const createUser = async (username, email, password, password_confirmatio
 };
 
 export const indexUser = async () => {
-  const response = await fetch(`https://hidden-plateau-07048.herokuapp.com/user/index`, {
+  const response = await fetch(`${url}users`, {
       method: 'GET',
       headers: {
         Accept: 'application/json',

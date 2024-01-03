@@ -1,6 +1,8 @@
+import { url }  from './global';
+
 export const createTechno = async (techno_name, techno_status) => {
   let dataRequest = {};  
-  const response = await fetch(`https://hidden-plateau-07048.herokuapp.com/techno/create`, {
+  const response = await fetch(`${url}technos`, {
         method: 'POST',
         headers: {
           Accept: 'application/json',
@@ -22,7 +24,7 @@ export const createTechno = async (techno_name, techno_status) => {
 export const updateTechno = async (id, techno_name, techno_status) => {
   debugger;
   let dataRequest = {};   
-  const response = await fetch(`https://hidden-plateau-07048.herokuapp.com/techno/update`, {
+  const response = await fetch(`${url}technos`, {
         method: 'PUT',
         headers: {
           Accept: 'application/json',
@@ -42,7 +44,7 @@ export const updateTechno = async (id, techno_name, techno_status) => {
 };
 
 export const getTechno = async (sort_by_name) => {
-    const response = await fetch(`https://hidden-plateau-07048.herokuapp.com/techno/get?sort_by_name=${sort_by_name}`, {
+    const response = await fetch(`${url}technos?sort_by_name=${sort_by_name}`, {
         method: 'GET',
         headers: {
           Accept: 'application/json',
@@ -57,15 +59,15 @@ export const getTechno = async (sort_by_name) => {
 
 export const searchTechno = async (sort_by_name, search, techno_name, techno_status) => {
   let dataTechnos={};
-    const response = await fetch(`https://hidden-plateau-07048.herokuapp.com/techno/search`, {
-        method: 'POST',
+    const response = await fetch(`${url}technos/search?sort_by_name=${sort_by_name}&search=${search}`, {
+        method: 'POST',               //technos/search
         headers: {
           Accept: 'application/json',
           'Content-Type': 'application/json',
           'id': localStorage.getItem('id'),
           'token': localStorage.getItem('token'),
         },
-        body: JSON.stringify({sort_by_name: sort_by_name, search: search, techno_name: techno_name, techno_status: techno_status} )
+        body: JSON.stringify({ techno_name: techno_name, techno_status: techno_status} )
       }).then((data)=>{
         dataTechnos.status = data.status;
         return data.json();
@@ -77,7 +79,7 @@ export const searchTechno = async (sort_by_name, search, techno_name, techno_sta
 };
 
 export const deleteTechno = async (id) => {
-    const response = await fetch(`https://hidden-plateau-07048.herokuapp.com/techno/delete?id=${id}`, {
+    const response = await fetch(`${url}technos?id=${id}`, {
         method: 'DELETE',
         headers: {
           Accept: 'application/json',
